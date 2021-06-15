@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion versionConfig.compileSdkVersion
+    buildToolsVersion versionConfig.buildToolsVersion
+
+    defaultConfig {
+        //applicationId "com.yongyongwang.multimedia.choose"
+        minSdkVersion versionConfig.minSdkVersion
+        targetSdkVersion versionConfig.targetSdkVersion
+        versionCode versionConfig.versionCode
+        versionName versionConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src\\main\\assets'
+            }
+            jni {
+                srcDirs 'src\\main\\jni'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:${androidxConfig.appcompat}"
+    implementation "com.google.android.material:material:${androidxConfig.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${androidxConfig.constraintlayout}"
+    testImplementation "junit:junit:${androidxConfig.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${androidxConfig.ext}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${androidxConfig.espresso_core}"
+
+    implementation "androidx.recyclerview:recyclerview:${dependConfig.recyclerView}"
+    implementation "com.github.bumptech.glide:glide:${dependConfig.glide}"
+    implementation "com.airbnb.android:lottie:${dependConfig.lottie}"
+}

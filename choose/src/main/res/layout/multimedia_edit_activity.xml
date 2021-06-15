@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/multimedia_theme_background">
+    <LinearLayout
+        android:background="@color/multimedia_theme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/multimedia_common_height">
+        <ImageView
+            android:id="@+id/multimedia_edit_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/multimedia_back"
+            android:scaleType="center"/>
+    </LinearLayout>
+
+    <com.yongyongwang.multimedia.choose.edit.view.CropView
+        android:id="@+id/multimedia_edit_crop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

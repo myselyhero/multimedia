@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!---->
+    <declare-styleable name="MultimediaChooseView">
+        <attr name="columnCount" format="integer"/>
+        <attr name="isAdd" format="boolean"/>
+        <attr name="addIcon" format="reference"/>
+        <attr name="isRemove" format="boolean"/>
+        <attr name="removeIcon" format="reference"/>
+        <attr name="maxNum" format="integer"/>
+    </declare-styleable>
+
+    <!--  -->
+    <declare-styleable name="MultimediaRecyclerView">
+        <attr name="spanCount" format="integer"/>
+        <attr name="isCamera" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="JCameraView">
+        <attr name="iconSize" format="dimension"/>
+        <attr name="iconMargin" format="dimension"/>
+        <attr name="iconSrc" format="reference"/>
+        <attr name="iconLeft" format="reference"/>
+        <attr name="iconRight" format="reference"/>
+        <attr name="duration_max" format="integer"/>
+    </declare-styleable>
+</resources>
