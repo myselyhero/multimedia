@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion versionConfig.compileSdkVersion
+    buildToolsVersion versionConfig.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.yongyongwang.multimedia"
+        minSdkVersion versionConfig.minSdkVersion
+        targetSdkVersion versionConfig.targetSdkVersion
+        versionCode versionConfig.versionCode
+        versionName versionConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation "androidx.appcompat:appcompat:${androidxConfig.appcompat}"
+    implementation "com.google.android.material:material:${androidxConfig.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${androidxConfig.constraintlayout}"
+    testImplementation "junit:junit:${androidxConfig.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${androidxConfig.ext}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${androidxConfig.espresso_core}"
+
+    implementation project(path: ':choose')
+}

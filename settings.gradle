@@ -1,0 +1,3 @@
+include ':choose'
+include ':app'
+rootProject.name = "multimedia"
