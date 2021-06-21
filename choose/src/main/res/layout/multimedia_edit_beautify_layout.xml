@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/multimedia_theme_background">
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaBeautifyEstate
+        android:id="@+id/multimedia_beautify_estate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaBeautifyList
+        android:id="@+id/multimedia_beautify_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

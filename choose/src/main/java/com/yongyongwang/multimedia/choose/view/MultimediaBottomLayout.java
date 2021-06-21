@@ -80,6 +80,14 @@ public class MultimediaBottomLayout extends LinearLayout {
      *
      * @param listener
      */
+    public void addEditClickListener(View.OnClickListener listener){
+        editTextView.setOnClickListener(listener);
+    }
+
+    /**
+     *
+     * @param listener
+     */
     public void addPreviewClickListener(OnClickListener listener){
         previewBackground.setOnClickListener(listener);
     }

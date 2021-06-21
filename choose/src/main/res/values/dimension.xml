@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="multimedia_common_height">48dp</dimen>
+
+    <dimen name="seekbar_nail_stroke_width">2dp</dimen>
+    <dimen name="seekbar_line_width">2dp</dimen>
 </resources>

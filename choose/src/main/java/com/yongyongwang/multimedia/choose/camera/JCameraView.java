@@ -143,13 +143,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
     private void initView() {
         setWillNotDraw(false);
-        View view = LayoutInflater.from(mContext).inflate(R.layout.multimedia_camera_view, this);
-        mVideoView = view.findViewById(R.id.video_preview);
-        mPhoto = view.findViewById(R.id.image_photo);
+        LayoutInflater.from(mContext).inflate(R.layout.multimedia_camera_view, this);
+        mVideoView = findViewById(R.id.video_preview);
+        mPhoto = findViewById(R.id.image_photo);
         mPhoto.setDisplayMatrix(new Matrix());
-        mSwitchCamera = view.findViewById(R.id.image_switch);
+        mSwitchCamera = findViewById(R.id.image_switch);
         mSwitchCamera.setImageResource(iconSrc);
-        mFlashLamp = view.findViewById(R.id.image_flash);
+        mFlashLamp = findViewById(R.id.image_flash);
         setFlashRes();
         mFlashLamp.setOnClickListener(v -> {
             type_flash++;
@@ -157,13 +157,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 type_flash = TYPE_FLASH_AUTO;
             setFlashRes();
         });
-        mCaptureLayout = (CaptureLayout) view.findViewById(R.id.capture_layout);
+        mCaptureLayout = (CaptureLayout) findViewById(R.id.capture_layout);
         mCaptureLayout.setDuration(duration);
         if (iconLeft > 0)
             mCaptureLayout.setLeftIcon(iconLeft);
         if (iconRight > 0)
             mCaptureLayout.setRightIcon(iconRight);
-        mFoucsView = (FoucsView) view.findViewById(R.id.fouce_view);
+        mFoucsView = (FoucsView) findViewById(R.id.fouce_view);
         mVideoView.getHolder().addCallback(this);
         //切换摄像头
         mSwitchCamera.setOnClickListener(v -> {

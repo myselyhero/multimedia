@@ -193,6 +193,7 @@ public class MultimediaRecyclerView extends RecyclerView {
                 int pos = isCamera ? position -1 : position;
 
                 MultimediaEntity mediaEntity = dataSource.get(pos);
+                holder.shadeBackground.setVisibility(mediaEntity.isChoose() ? View.VISIBLE : View.GONE);
                 holder.chooseImageView.setImageResource(mediaEntity.isChoose() ? R.drawable.multimedia_choose_sel : R.drawable.multimedia_choose_un);
                 if (FileUtils.isVideo(mediaEntity.getMimeType())){
                     holder.tagTextView.setVisibility(View.VISIBLE);
@@ -239,6 +240,7 @@ public class MultimediaRecyclerView extends RecyclerView {
 
         ImageView imageView;
         ImageView chooseImageView;
+        View shadeBackground;
         TextView tagTextView;
 
         public MultimediaHolder(@NonNull View itemView) {
@@ -246,6 +248,7 @@ public class MultimediaRecyclerView extends RecyclerView {
             imageView = itemView.findViewById(R.id.multimedia_item_image);
             chooseImageView = itemView.findViewById(R.id.multimedia_item_choose);
             tagTextView = itemView.findViewById(R.id.multimedia_item_tag);
+            shadeBackground = itemView.findViewById(R.id.multimedia_item_shade);
         }
     }
 

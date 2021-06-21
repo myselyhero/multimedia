@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
+import com.yongyongwang.multimedia.choose.edit.MultimediaEditActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaPreviewEntity;
@@ -90,11 +91,14 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
             setResult(RESULT_OK);
             finish();
         });
-        /*mBottomLayout.addEditClickListener(v -> {
+        mBottomLayout.addEditClickListener(v -> {
+            MultimediaEntity entity = getEntity(viewPager.getCurrentItem());
+            if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
+                return;
             Intent intent = new Intent(this, MultimediaEditActivity.class);
-            intent.putExtra(MULTIMEDIA_REQUEST_DATA,getEntity(viewPager.getCurrentItem()));
+            intent.putExtra(MULTIMEDIA_REQUEST_DATA,entity);
             startActivity(intent);
-        });*/
+        });
         mBottomLayout.addCheckListener(v -> {
             MultimediaEntity entity = getEntity(viewPager.getCurrentItem());
             boolean flag = previewChooseItem(entity,isAll);

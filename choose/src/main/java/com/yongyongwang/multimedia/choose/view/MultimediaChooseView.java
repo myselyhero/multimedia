@@ -219,7 +219,6 @@ public class MultimediaChooseView extends RecyclerView {
                 }
 
                 final MultimediaEntity entity = dataSource.get(position);
-                Log.e(TAG, "onBindViewHolder: "+entity.toString());
 
                 String path = entity.getPath();
                 if (!TextUtils.isEmpty(entity.getCompressPath())){

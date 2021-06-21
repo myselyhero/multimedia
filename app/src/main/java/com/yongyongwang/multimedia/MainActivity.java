@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 MultimediaBuild.create(MainActivity.this)
                         .isCamera(true)
                         .isCompress(true)
+                        .isCrop(true)
                         .start(data -> {
                             chooseView.setDataSource(data);
                         });
