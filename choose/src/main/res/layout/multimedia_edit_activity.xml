@@ -3,8 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/multimedia_theme_background">
-    <LinearLayout
+    <RelativeLayout
         android:background="@color/multimedia_theme"
         android:layout_width="match_parent"
         android:layout_height="@dimen/multimedia_common_height">
@@ -14,10 +15,49 @@
             android:layout_height="match_parent"
             android:src="@drawable/multimedia_back"
             android:scaleType="center"/>
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/multimedia_edit_save"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/multimedia_edit_save"/>
+    </RelativeLayout>
 
     <com.yongyongwang.multimedia.choose.edit.view.CropView
         android:id="@+id/multimedia_edit_crop"
+        android:layout_weight="1"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaRatioLayout
+        android:visibility="gone"
+        android:id="@+id/multimedia_edit_ration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaFilterLayout
+        android:visibility="gone"
+        android:id="@+id/multimedia_edit_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaBeautifyLayout
+        android:id="@+id/multimedia_edit_beautify"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaAdjustLayout
+        android:visibility="gone"
+        android:id="@+id/multimedia_edit_adjust"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yongyongwang.multimedia.choose.edit.view.MultimediaEditButtonLayout
+        android:id="@+id/multimedia_edit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

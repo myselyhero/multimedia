@@ -10,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
+import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
 import com.yongyongwang.multimedia.choose.compress.Luban;
 import com.yongyongwang.multimedia.choose.compress.model.OnCompressListener;
+import com.yongyongwang.multimedia.choose.edit.MultimediaEditActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentFolderListener;
@@ -87,7 +89,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             @Override
             public void onCamera() {
                 if (checkCameraPermission(MultimediaActivity.this)){
-                    Intent intent = new Intent(MultimediaActivity.this,MultimediaCameraActivity.class);
+                    Intent intent = new Intent(MultimediaActivity.this, MultimediaCameraActivity.class);
                     startActivityForResult(intent,COMMON_CAMERA_CODE);
                 }
             }
@@ -112,6 +114,16 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                     mRecyclerView.setDataSource(entity.getData());
                 }
             }
+        });
+        mBottomLayout.addEditClickListener(v -> {
+            if (mChooseDataSource.size() == 0)
+                return;
+            MultimediaEntity entity = mChooseDataSource.get(mChooseDataSource.size()-1);
+            if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
+                return;
+            Intent intent = new Intent(this, MultimediaEditActivity.class);
+            intent.putExtra(MULTIMEDIA_REQUEST_DATA,entity);
+            startActivity(intent);
         });
         mBottomLayout.addPreviewClickListener(v -> {
             if (mChooseDataSource.size() == 0)

@@ -8,8 +8,14 @@
         android:id="@+id/multimedia_item_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/multimedia_default_image" />
+        android:src="@drawable/multimedia_default_image"/>
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/multimedia_item_shade"
+        android:background="@drawable/multimedia_item_choose_shade"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/multimedia_item_choose"
@@ -21,6 +27,7 @@
         android:src="@drawable/multimedia_choose_un"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/multimedia_item_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

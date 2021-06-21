@@ -2,18 +2,28 @@ package com.yongyongwang.multimedia.choose.edit.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
+import android.opengl.GLES20;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+
+import com.yongyongwang.multimedia.choose.R;
+import com.yongyongwang.multimedia.choose.magic.MagicEngine;
+import com.yongyongwang.multimedia.choose.magic.filter.advanced.MagicBeautyFilter;
+import com.yongyongwang.multimedia.choose.magic.filter.base.gpuimage.GPUImageFilter;
+import com.yongyongwang.multimedia.choose.magic.filter.helper.MagicFilterFactory;
+import com.yongyongwang.multimedia.choose.magic.filter.helper.MagicFilterType;
+import com.yongyongwang.multimedia.choose.magic.utils.OpenGlUtils;
+import com.yongyongwang.multimedia.choose.magic.utils.Rotation;
+import com.yongyongwang.multimedia.choose.magic.utils.TextureRotationUtil;
+import com.yongyongwang.multimedia.choose.magic.widget.MagicCameraView;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 /**
  * @author myselyhero 
@@ -22,9 +32,7 @@ import androidx.annotation.Nullable;
  * 
  * @// TODO: 2021/6/8
  */
-public class BackGroundLayer extends View {
-
-    private static final String TAG = "BackGroundLayer";
+public class BackGroundLayer extends AppCompatImageView {
 
     private static final int DISPLAY_PADDING_LEFT = 30;
     private static final int DISPLAY_PADDING_TOP = 24;
@@ -48,38 +56,24 @@ public class BackGroundLayer extends View {
         init();
     }
 
-    public BackGroundLayer(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
     /**
      *
      */
     private void init(){
-
+        //setScaleType(ScaleType.CENTER);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        boundRect = new Rect(left + dip2px(DISPLAY_PADDING_LEFT),
+        /*boundRect = new Rect(left + dip2px(DISPLAY_PADDING_LEFT),
                 top + dip2px(DISPLAY_PADDING_TOP),
                 right - dip2px(DISPLAY_PADDING_RIGHT),
-                bottom - dip2px(DISPLAY_PADDING_BOTTOM));
+                bottom - dip2px(DISPLAY_PADDING_BOTTOM));*/
+        boundRect = new Rect(left, top, right, bottom);
 
         updateViewport();
         invalidate();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (mBitmap == null)
-            return;
-        canvas.save();
-        canvas.drawBitmap(mBitmap, new Matrix(),new Paint());
-        canvas.restore();
     }
 
     /**
@@ -90,6 +84,7 @@ public class BackGroundLayer extends View {
         if (bitmap == null)
             return;
         mBitmap = bitmap;
+        setImageBitmap(mBitmap);
         updateViewport();
         invalidate();
     }

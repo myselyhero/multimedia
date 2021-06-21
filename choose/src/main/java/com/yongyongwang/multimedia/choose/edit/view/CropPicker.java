@@ -39,6 +39,11 @@ public class CropPicker extends ImagePicker {
     private static final float UNSPECIFIED = -1f;
     private static final float RATIO_RECT_EDGE = 1f;
 
+    public static final float SIXTEEN_NINE = 16f / 9F;
+    public static final float NINE_SIXTEEN = 9F / 16F;
+    public static final float FOUR_ONE = 4F / 3F;
+    public static final float SQUARE = 1F / 1F;
+
     private int touchTolerance;
     private float minSelectionLength;
     private float cornerThickness;
@@ -117,14 +122,12 @@ public class CropPicker extends ImagePicker {
         float top = (baseLineRect.top + ratioRect.top * baseLineRect.height()) / targetHeightRatio;
         float right = (baseLineRect.right - (1F - ratioRect.right) * baseLineRect.width()) / targetWidthRatio;
         float bottom = (baseLineRect.bottom - (1F - ratioRect.bottom) * baseLineRect.height()) / targetHeightRatio;
-        Log.e(TAG, "getRatioTargetRect: "+left+"top:"+top+"right"+right+"bottom"+bottom);
         tempResultRectF.set(left, top, right, bottom);
         return tempResultRectF;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent touchEvent) {
-        //return super.onTouchEvent(event);
         if (touchEvent == null) {
             return false;
         }

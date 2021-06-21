@@ -8,7 +8,7 @@
         <activity android:name=".MultimediaPreviewActivity" />
         <activity android:name=".MultimediaPlayerActivity" />
         <activity android:name=".edit.MultimediaEditActivity" />
-        <activity android:name=".MultimediaCameraActivity" />
+        <activity android:name=".camera.MultimediaCameraActivity" />
     </application>
     <!-- 网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

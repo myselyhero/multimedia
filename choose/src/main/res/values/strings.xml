@@ -22,47 +22,29 @@
     <string name="lwj_status_fail">呀！挂了挂了！</string>
     <string name="lwj_status_fail_network">请检查网络环境后再试！</string>
 
-    <string name="filter_none">Original</string>
-    <string name="filter_amaro">Amaro</string>
-    <string name="filter_brannan">Brannan</string>
-    <string name="filter_brooklyn">Brooklyn</string>
-    <string name="filter_Earlybird">EarlyBird</string>
-    <string name="filter_freud">Freud</string>
-    <string name="filter_hefe">Hefe</string>
-    <string name="filter_hudson">Hudson</string>
-    <string name="filter_inkwell">Inkwell</string>
-    <string name="filter_kevin">Kevin</string>
-    <string name="filter_lomo">Lomo</string>
-    <string name="filter_n1977">1977</string>
-    <string name="filter_nashville">Nashville</string>
-    <string name="filter_pixar">Pixar</string>
-    <string name="filter_rise">Rise</string>
-    <string name="filter_sierra">Sierra</string>
-    <string name="filter_sutro">Sutro</string>
-    <string name="filter_toastero">Toaster2</string>
-    <string name="filter_valencia">Valencia</string>
-    <string name="filter_walden">Walden</string>
-    <string name="filter_xproii">XproII</string>
-    <string name="filter_whitecat">WhiteCat</string>
-    <string name="filter_blackcat">BlackCat</string>
-    <string name="filter_romance">Romance</string>
-    <string name="filter_sakura">Sakura</string>
-    <string name="filter_antique">Antique</string>
-    <string name="filter_beauty">Beauty</string>
-    <string name="filter_calm">Calm</string>
-    <string name="filter_cool">Cool</string>
-    <string name="filter_emerald">Emerald</string>
-    <string name="filter_evergreen">Evergreen</string>
-    <string name="filter_fairytale">Fairytale</string>
-    <string name="filter_healthy">Healthy</string>
-    <string name="filter_latte">Latte</string>
-    <string name="filter_nostalgia">Nostalgia</string>
-    <string name="filter_tender">Tender</string>
-    <string name="filter_warm">Warm</string>
-    <string name="filter_sweets">Sweets</string>
-    <string name="filter_sunrise">Sunrise</string>
-    <string name="filter_sunset">Sunset</string>
-    <string name="filter_skinwhiten">SkinWhiten</string>
-    <string name="filter_crayon">Crayon</string>
-    <string name="filter_sketch">Sketch</string>
+    <string name="multimedia_edit_crop">剪裁</string>
+    <string name="multimedia_edit_filter">滤镜</string>
+    <string name="multimedia_edit_beauty">美颜</string>
+    <string name="multimedia_edit_abjust">调节</string>
+
+    <string name="multimedia_ration_1">1:1</string>
+    <string name="multimedia_ration_4">4:3</string>
+    <string name="multimedia_ration_16">16:9</string>
+    <string name="multimedia_ration_9">9:16</string>
+    
+    <string name="multimedia_beautify_buffing">磨皮</string>
+    <string name="multimedia_beautify_whitening">美白</string>
+
+    <string name="multimedia_adjust_contrast">对比度</string>
+    <string name="multimedia_adjust_saturation">饱和度</string>
+    <string name="multimedia_adjust_sharpness">锐度</string>
+    <string name="multimedia_adjust_bright">亮度</string>
+    <string name="multimedia_adjust_hue">色调</string>
+
+    <string name="multimedia_beautify_0">0</string>
+    <string name="multimedia_beautify_1">1</string>
+    <string name="multimedia_beautify_2">2</string>
+    <string name="multimedia_beautify_3">3</string>
+    <string name="multimedia_beautify_4">4</string>
+    <string name="multimedia_beautify_5">5</string>
 </resources>
