@@ -41,9 +41,10 @@ public class MultimediaRecyclerView extends RecyclerView {
     private AttributeSet attributeSet;
     private int spanCount;
     private boolean isCamera;
+    private boolean isShade;
 
     private MultimediaAdapter mAdapter;
-    private List<MultimediaEntity> dataSource = new ArrayList<>();
+    private List<MultimediaEntity> dataSource;
 
     private OnMultimediaAdapterListener adapterListener;
 
@@ -100,10 +101,7 @@ public class MultimediaRecyclerView extends RecyclerView {
      * @param data
      */
     public void setDataSource(@NonNull List<MultimediaEntity> data) {
-        if (dataSource.size() != 0){
-            dataSource.clear();
-        }
-        dataSource.addAll(data);
+        dataSource = data;
         mAdapter.notifyDataSetChanged();
     }
 
@@ -138,6 +136,14 @@ public class MultimediaRecyclerView extends RecyclerView {
      */
     public void setCamera(boolean camera) {
         isCamera = camera;
+    }
+
+    /**
+     *
+     * @param shade
+     */
+    public void setShade(boolean shade) {
+        isShade = shade;
     }
 
     /**
@@ -193,7 +199,7 @@ public class MultimediaRecyclerView extends RecyclerView {
                 int pos = isCamera ? position -1 : position;
 
                 MultimediaEntity mediaEntity = dataSource.get(pos);
-                holder.shadeBackground.setVisibility(mediaEntity.isChoose() ? View.VISIBLE : View.GONE);
+                holder.shadeBackground.setVisibility(isShade && mediaEntity.isChoose() ? View.VISIBLE : View.GONE);
                 holder.chooseImageView.setImageResource(mediaEntity.isChoose() ? R.drawable.multimedia_choose_sel : R.drawable.multimedia_choose_un);
                 if (FileUtils.isVideo(mediaEntity.getMimeType())){
                     holder.tagTextView.setVisibility(View.VISIBLE);
@@ -220,7 +226,7 @@ public class MultimediaRecyclerView extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            return isCamera ? dataSource.size() + 1 : dataSource.size();
+            return isCamera ? dataSource == null ? 0 : dataSource.size() + 1 : dataSource == null ? 0 : dataSource.size();
         }
 
         @Override

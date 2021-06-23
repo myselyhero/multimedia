@@ -1,11 +1,15 @@
 package com.yongyongwang.multimedia;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.yongyongwang.multimedia.choose.MultimediaBuild;
+import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.view.MultimediaChooseView;
 
@@ -22,10 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdd() {
                 MultimediaBuild.create(MainActivity.this)
-                        .isCamera(true)
-                        .isCompress(true)
-                        .isCrop(true)
-                        .start(data -> {
+                        .startCamera(data -> {
                             chooseView.setDataSource(data);
                         });
             }
@@ -35,5 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode == RESULT_OK){
+            MultimediaEntity entity = (MultimediaEntity) data.getSerializableExtra(MultimediaBaseActivity.MULTIMEDIA_RESULT_DATA);
+            if (entity != null){
+                Log.e(MainActivity.class.getSimpleName(), "onActivityResult: "+entity.toString());
+            }
+        }
     }
 }

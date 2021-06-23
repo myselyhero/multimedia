@@ -1,10 +1,12 @@
 package com.yongyongwang.multimedia.choose.view;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -108,12 +110,15 @@ public class MultimediaTopLayout extends LinearLayout implements View.OnClickLis
      *
      * @param mConfig
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void setConfig(MultimediaConfig mConfig) {
         this.mConfig = mConfig;
         if (!TextUtils.isEmpty(mConfig.getConfirmText()))
             button.setText(mConfig.getConfirmText());
         if (mConfig.getConfirmDrawable() > 0)
             button.setBackground(getResources().getDrawable(mConfig.getConfirmDrawable()));
+        if (mConfig.getConfirmTextColor() > 0)
+            button.setTextColor(getResources().getColor(mConfig.getConfirmTextColor()));
     }
 
     /**

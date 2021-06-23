@@ -19,6 +19,7 @@ import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentFolderListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentListener;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
+import com.yongyongwang.multimedia.choose.util.MultimediaCompressUtil;
 import com.yongyongwang.multimedia.choose.util.MultimediaContentResolver;
 import com.yongyongwang.multimedia.choose.util.ProgressManagerKit;
 import com.yongyongwang.multimedia.choose.view.MultimediaBottomLayout;
@@ -67,6 +68,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         mRecyclerView = findViewById(R.id.multimedia_item);
 
         mRecyclerView.setCamera(mChooseConfig.isCamera());
+        mRecyclerView.setShade(mChooseConfig.isShade());
         mTopLayout.setConfig(mChooseConfig);
         mBottomLayout.setConfig(mChooseConfig);
         if (mChooseConfig.getSpanCount() > 0){
@@ -217,49 +219,12 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
      *
      */
     protected void compress(){
-        ProgressManagerKit.getInstance().start(MultimediaActivity.this);
-
-        List<MultimediaEntity> list = new ArrayList<>();
-        for (MultimediaEntity entity : mChooseDataSource) {
-            if (!FileUtils.isGif(entity.getPath()) && !FileUtils.isVideo(entity.getPath())){
-                list.add(entity);
-            }
-        }
-
-        FileUtils.initPath(MultimediaActivity.this);
-        Luban.with(MultimediaActivity.this)
-                .load(list)
-                .ignoreBy(100)
-                .setTargetDir(FileUtils.DIR)
-                .setFocusAlpha(false)
-                .setCompressListener(new OnCompressListener() {
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onSuccess(MultimediaEntity entity) {
-                        count++;
-                        for (int i = 0; i < mChooseDataSource.size(); i++) {
-                            MultimediaEntity multimediaEntity = mChooseDataSource.get(i);
-                            if (TextUtils.equals(entity.getPath(),multimediaEntity.getPath())){
-                                mChooseDataSource.remove(i);
-                                mChooseDataSource.add(i,multimediaEntity);
-                                break;
-                            }
-                        }
-                        if (count == list.size()){
-                            ProgressManagerKit.getInstance().close();
-                            complete();
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-                }).launch();
+        ProgressManagerKit.getInstance().start(this);
+        MultimediaCompressUtil.getInstance().compress(this,mChooseConfig.getDir(),mChooseDataSource,data -> {
+            ProgressManagerKit.getInstance().close();
+            complete();
+            finish();
+        });
     }
 
     /**
@@ -302,6 +267,14 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                 }else {
                     if (mRecyclerView.getVisibility() == View.GONE){
                         mRecyclerView.setVisibility(View.VISIBLE);
+                    }
+                    //判断已选
+                    for (MultimediaEntity entity : data) {
+                        for (MultimediaEntity e: mChooseDataSource) {
+                            if (TextUtils.equals(entity.getPath(),e.getPath())){
+                                entity.setChoose(true);
+                            }
+                        }
                     }
                     for (MultimediaFolderEntity entity : mFolderDataSource) {
                         if (bucketId == entity.getBucketId()){

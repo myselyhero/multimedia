@@ -1,4 +1,4 @@
-package com.yongyongwang.multimedia.choose.camera;
+package com.yongyongwang.multimedia.choose.camera.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

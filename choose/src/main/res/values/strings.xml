@@ -12,6 +12,7 @@
     <string name="multimedia_choose_preview_n">预览(%d)</string>
 
     <string name="multimedia_choose_mixture">图片与视频不能同时选择！</string>
+    <string name="multimedia_choose_max_mixture">最多选择%d张图片或视频</string>
     <string name="multimedia_choose_max_image">最多选择%d张图片</string>
     <string name="multimedia_choose_max_video">最多选择%d个视频</string>
 
@@ -21,6 +22,11 @@
     <string name="lwj_status_loader">加载中...</string>
     <string name="lwj_status_fail">呀！挂了挂了！</string>
     <string name="lwj_status_fail_network">请检查网络环境后再试！</string>
+
+
+    <string name="multimedia_camera_error">摄像头打开失败！</string>
+    <string name="multimedia_camera_no_permission">没有录音权限！</string>
+    <string name="multimedia_camera_save_error">保存失败！</string>
 
     <string name="multimedia_edit_crop">剪裁</string>
     <string name="multimedia_edit_filter">滤镜</string>

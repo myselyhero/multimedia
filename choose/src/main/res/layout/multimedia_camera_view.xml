@@ -48,13 +48,13 @@
     </LinearLayout>
 
 
-    <com.yongyongwang.multimedia.choose.camera.CaptureLayout
+    <com.yongyongwang.multimedia.choose.camera.view.CaptureLayout
         android:id="@+id/capture_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"/>
 
-    <com.yongyongwang.multimedia.choose.camera.FoucsView
+    <com.yongyongwang.multimedia.choose.camera.view.FoucsView
         android:id="@+id/fouce_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

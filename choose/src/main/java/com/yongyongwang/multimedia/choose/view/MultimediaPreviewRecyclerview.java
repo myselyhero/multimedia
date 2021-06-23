@@ -1,5 +1,7 @@
 package com.yongyongwang.multimedia.choose.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Rect;
 import android.text.TextUtils;
@@ -17,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.entity.MultimediaPreviewEntity;
-import com.yongyongwang.multimedia.choose.util.FileUtils;
 import com.yongyongwang.multimedia.choose.util.GlideEngine;
 
 import java.util.ArrayList;
@@ -82,9 +83,41 @@ public class MultimediaPreviewRecyclerview extends RecyclerView {
             return;
         dataSource.addAll(entities);
         mAdapter.notifyDataSetChanged();
-        if (getVisibility() != View.VISIBLE)
+        if (getVisibility() != View.VISIBLE){
             setVisibility(View.VISIBLE);
+            animate()
+                    .alpha(1f)
+                    .setDuration(1000)
+                    .setListener(null);
+        }
         scrollToPosition(dataSource.size()-1);
+    }
+
+    /**
+     *
+     * @param path
+     */
+    public void scrollerPosition(String path){
+        if (dataSource == null || dataSource.size() == 0)
+            return;
+        if (getVisibility() != View.VISIBLE){
+            setVisibility(View.VISIBLE);
+            animate()
+                    .alpha(1f)
+                    .setDuration(1000)
+                    .setListener(null);
+        }
+        for (int i = 0; i < dataSource.size(); i++) {
+            MultimediaPreviewEntity entity = dataSource.get(i);
+            if (entity.isChoose()){
+                entity.setChoose(false);
+                mAdapter.notifyItemChanged(i);
+            }else if (TextUtils.equals(entity.getPath(),path)){
+                entity.setChoose(true);
+                mAdapter.notifyItemChanged(i);
+                scrollToPosition(i);
+            }
+        }
     }
 
     /**
@@ -98,8 +131,13 @@ public class MultimediaPreviewRecyclerview extends RecyclerView {
         int count = dataSource.size();
         dataSource.add(entity);
         mAdapter.notifyItemRangeInserted(count,dataSource.size());
-        if (getVisibility() != View.VISIBLE)
+        if (getVisibility() != View.VISIBLE){
             setVisibility(View.VISIBLE);
+            animate()
+                    .alpha(1f)
+                    .setDuration(1000)
+                    .setListener(null);
+        }
         scrollToPosition(dataSource.size()-1);
     }
 
@@ -107,11 +145,24 @@ public class MultimediaPreviewRecyclerview extends RecyclerView {
      *
      */
     public void clearCurrentPosition(){
+        if (dataSource == null)
+            return;
         for (int i = 0; i < dataSource.size(); i++) {
             if (dataSource.get(i).isChoose()){
                 dataSource.get(i).setChoose(false);
                 mAdapter.notifyItemChanged(i);
             }
+        }
+        if (dataSource.size() == 0){
+            animate()
+                    .alpha(0f)
+                    .setDuration(1000)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            setVisibility(View.GONE);
+                        }
+                    });
         }
     }
 
@@ -120,6 +171,8 @@ public class MultimediaPreviewRecyclerview extends RecyclerView {
      * @param path
      */
     public void remove(String path){
+        if (dataSource == null)
+            return;
         for (int i = 0; i < dataSource.size(); i++) {
             if (TextUtils.equals(dataSource.get(i).getPath(),path)){
                 dataSource.remove(i);
@@ -128,6 +181,27 @@ public class MultimediaPreviewRecyclerview extends RecyclerView {
                 break;
             }
         }
+        if (dataSource.size() == 0){
+            animate()
+                    .alpha(0f)
+                    .setDuration(1000)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            setVisibility(View.GONE);
+                        }
+                    });
+        }
+    }
+
+    /**
+     *
+     */
+    public void clear(){
+        if (dataSource == null || dataSource.size() == 0)
+            return;
+        dataSource.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     /**

@@ -40,6 +40,9 @@ public class Luban implements Handler.Callback {
   private final CompressionPredicate mCompressionPredicate;
   private final List<InputStreamProvider> mStreamProviders;
 
+  //
+  private static int count;
+
   private Handler mHandler;
 
   private Luban(Builder builder) {

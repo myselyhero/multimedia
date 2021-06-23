@@ -1,4 +1,4 @@
-package com.yongyongwang.multimedia.choose.camera;
+package com.yongyongwang.multimedia.choose.camera.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

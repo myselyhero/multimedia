@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -129,11 +131,28 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 全部文件夹和当前文件选中转状态统一
+     *
+     * @param entity
+     */
+    private void isNotifyFolder(MultimediaEntity entity){
+        for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
+            if (folderEntity.getData() != null && folderEntity.getData().size() != 0){
+                for (MultimediaEntity e : folderEntity.getData()) {
+                    if (TextUtils.equals(e.getPath(),entity.getPath())){
+                        e.setChoose(entity.isChoose());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * 选中操作
      * @param entity
-     * @return
      */
-    protected boolean chooseItem(MultimediaEntity entity){
+    protected void chooseItem(MultimediaEntity entity){
 
         /**
          * 已选
@@ -181,7 +200,9 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
                         }
                     }
                 }else {
-                    if (mChooseConfig.getMultimediaType() == MultimediaEnum.VIDEO){
+                    if (mChooseConfig.isMixture()){
+                        ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_mixture),mChooseConfig.getMaxNum()));
+                    }else if (mChooseConfig.getMultimediaType() == MultimediaEnum.VIDEO){
                         ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_video),mChooseConfig.getMaxNum()));
                     }else {
                         ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_image),mChooseConfig.getMaxNum()));
@@ -190,7 +211,7 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
             }
         }
         onUpdatePreview(mChooseDataSource.size());
-        return entity.isChoose();
+        isNotifyFolder(entity);
     }
 
     /**
@@ -249,7 +270,9 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
                         }
                     }
                 }else {
-                    if (mChooseConfig.getMultimediaType() == MultimediaEnum.VIDEO){
+                    if (mChooseConfig.isMixture()){
+                        ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_mixture),mChooseConfig.getMaxNum()));
+                    }else if (mChooseConfig.getMultimediaType() == MultimediaEnum.VIDEO){
                         ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_video),mChooseConfig.getMaxNum()));
                     }else {
                         ToastUtil.showShort(this,String.format(getString(R.string.multimedia_choose_max_image),mChooseConfig.getMaxNum()));
@@ -268,7 +291,7 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
             }
             onUpdatePreview(i);
         }
-
+        isNotifyFolder(entity);
         return entity.isChoose();
     }
 
