@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,17 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yongyongwang.multimedia.choose.R;
-import com.yongyongwang.multimedia.choose.magic.FilterTypeHelper;
-import com.yongyongwang.multimedia.choose.magic.filter.helper.MagicFilterType;
 
 /**
  *
  */
 public class MultimediaFilterLayout extends RecyclerView {
-
-    private final MagicFilterType[] arrays = FilterTypeHelper.FILTER_TYPES;
-
-    private OnFilterClickListener clickListener;
 
     public MultimediaFilterLayout(@NonNull Context context) {
         super(context);
@@ -55,14 +48,6 @@ public class MultimediaFilterLayout extends RecyclerView {
 
     /**
      *
-     * @param clickListener
-     */
-    public void setClickListener(OnFilterClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
-
-    /**
-     *
      */
     class MultimediaFilterAdapter extends RecyclerView.Adapter<MultimediaFilterHolder>{
 
@@ -75,18 +60,18 @@ public class MultimediaFilterLayout extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull MultimediaFilterHolder holder, int position) {
-            MagicFilterType type = arrays[position];
+            /*MagicFilterType type = arrays[position];
             holder.imageView.setImageResource(FilterTypeHelper.FilterType2Thumb(type));
             if (clickListener != null){
                 holder.imageView.setOnClickListener(v -> {
                     clickListener.onClick(type);
                 });
-            }
+            }*/
         }
 
         @Override
         public int getItemCount() {
-            return arrays == null ? 0 : arrays.length;
+            return 0;
         }
     }
 
@@ -101,17 +86,5 @@ public class MultimediaFilterLayout extends RecyclerView {
             super(itemView);
             imageView = itemView.findViewById(R.id.multimedia_edit_filter_iv);
         }
-    }
-
-    /**
-     *
-     */
-    public interface OnFilterClickListener {
-
-        /**
-         *
-         * @param type
-         */
-        void onClick(MagicFilterType type);
     }
 }

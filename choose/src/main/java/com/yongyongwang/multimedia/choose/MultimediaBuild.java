@@ -7,6 +7,7 @@ import android.content.Intent;
 
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
+import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.lang.ref.WeakReference;
@@ -58,6 +59,26 @@ public class MultimediaBuild {
     }
 
     /**
+     * 单选模式下预览页面是否需要已选列表展示
+     * @param preview
+     * @return
+     */
+    public MultimediaBuild isOnlyPreview(boolean preview){
+        mChooseConfig.setOnlyPreview(preview);
+        return this;
+    }
+
+    /**
+     * 选中后是否需要阴影效果
+     * @param shade
+     * @return
+     */
+    public MultimediaBuild isShade(boolean shade){
+        mChooseConfig.setShade(shade);
+        return this;
+    }
+
+    /**
      * 最大可选数量
      * @param maxNum
      * @return
@@ -94,6 +115,16 @@ public class MultimediaBuild {
      */
     public MultimediaBuild setSpanCount(int spanCount){
         mChooseConfig.setSpanCount(spanCount);
+        return this;
+    }
+
+    /**
+     * 图片的最大（超过后过滤）
+     * @param size MB
+     * @return
+     */
+    public MultimediaBuild setMaxSize(int size){
+        mChooseConfig.setMaxSize(size);
         return this;
     }
 
@@ -159,11 +190,31 @@ public class MultimediaBuild {
 
     /**
      *
+     * @param dir
+     * @return
+     */
+    public MultimediaBuild dir(String dir){
+        mChooseConfig.setDir(dir);
+        return this;
+    }
+
+    /**
+     *
      * @param text
      * @return
      */
     public MultimediaBuild confirmText(String text){
         mChooseConfig.setConfirmText(text);
+        return this;
+    }
+
+    /**
+     *
+     * @param color
+     * @return
+     */
+    public MultimediaBuild confirmTextColor(int color){
+        mChooseConfig.setConfirmTextColor(color);
         return this;
     }
 
@@ -197,6 +248,30 @@ public class MultimediaBuild {
      */
     public void start(int requestCode){
         Intent intent = new Intent(mActivity.get(), MultimediaActivity.class);
+        intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
+        mActivity.get().startActivityForResult(intent,requestCode);
+    }
+
+    /**
+     *
+     * @param resultListener
+     */
+    public void startCamera(MultimediaResultListener resultListener){
+        if (resultListener == null)
+            return;
+        MultimediaConfig.cameraListener = new WeakReference<>(resultListener).get();
+
+        Intent intent = new Intent(mActivity.get(), MultimediaCameraActivity.class);
+        intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
+        mActivity.get().startActivity(intent);
+    }
+
+    /**
+     *
+     * @param requestCode
+     */
+    public void startCamera(int requestCode){
+        Intent intent = new Intent(mActivity.get(), MultimediaCameraActivity.class);
         intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
         mActivity.get().startActivityForResult(intent,requestCode);
     }

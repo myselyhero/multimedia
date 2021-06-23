@@ -832,7 +832,7 @@ public class FileUtils {
      */
     public static String FormetFileSize(long fileS) {
         DecimalFormat df = new DecimalFormat("#.00");
-        String fileSizeString = "";
+        String fileSizeString;
         String wrongSize = "0B";
         if (fileS == 0) {
             return wrongSize;
@@ -847,6 +847,19 @@ public class FileUtils {
             fileSizeString = df.format((double) fileS / 1073741824) + "GB";
         }
         return fileSizeString;
+    }
+
+    /**
+     *
+     * @param fileS
+     * @return
+     */
+    public static double formFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (fileS < 1048576) {
+            return 0;
+        }
+        return Double.parseDouble(df.format(fileS / 1048576));
     }
 
     /**

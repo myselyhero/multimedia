@@ -51,6 +51,24 @@ public class MultimediaConfig implements Serializable {
     private boolean only;
 
     /**
+     * 单选模式下预览页面是否需要已选列表展示
+     *
+     *{@link com.yongyongwang.multimedia.choose.view.MultimediaPreviewRecyclerview}
+     *
+     */
+    private boolean onlyPreview = true;
+
+    /**
+     * 选中后的阴影
+     */
+    private boolean shade = true;
+
+    /**
+     * 图片的最大（超过后过滤）
+     */
+    private int maxSize;
+
+    /**
      * 剪切、只在单选时可用、暂不考虑多图剪切
      */
     private boolean crop;
@@ -91,15 +109,22 @@ public class MultimediaConfig implements Serializable {
     private int spanCount = -1;
 
     /**
+     * 所有产生的文件保存地址
+     */
+    private String dir;
+
+    /**
      * 确认按钮
      */
     private int confirmDrawable;
+    private int confirmTextColor;
     private String confirmText;
 
     /**
      *
      */
     public static MultimediaResultListener resultListener;
+    public static MultimediaResultListener cameraListener;
 
     public static void setInstance(MultimediaConfig instance) {
         MultimediaConfig.instance = instance;
@@ -135,6 +160,30 @@ public class MultimediaConfig implements Serializable {
 
     public void setOnly(boolean only) {
         this.only = only;
+    }
+
+    public boolean isOnlyPreview() {
+        return onlyPreview;
+    }
+
+    public void setOnlyPreview(boolean onlyPreview) {
+        this.onlyPreview = onlyPreview;
+    }
+
+    public boolean isShade() {
+        return shade;
+    }
+
+    public void setShade(boolean shade) {
+        this.shade = shade;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 
     public boolean isCrop() {
@@ -201,12 +250,28 @@ public class MultimediaConfig implements Serializable {
         this.spanCount = spanCount;
     }
 
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String dir) {
+        this.dir = dir;
+    }
+
     public int getConfirmDrawable() {
         return confirmDrawable;
     }
 
     public void setConfirmDrawable(int confirmDrawable) {
         this.confirmDrawable = confirmDrawable;
+    }
+
+    public int getConfirmTextColor() {
+        return confirmTextColor;
+    }
+
+    public void setConfirmTextColor(int confirmTextColor) {
+        this.confirmTextColor = confirmTextColor;
     }
 
     public String getConfirmText() {
@@ -224,6 +289,8 @@ public class MultimediaConfig implements Serializable {
                 ", maxNum=" + maxNum +
                 ", minNum=" + minNum +
                 ", only=" + only +
+                ", onlyPreview=" + onlyPreview +
+                ", shade=" + shade +
                 ", crop=" + crop +
                 ", compress=" + compress +
                 ", mixture=" + mixture +
@@ -232,7 +299,9 @@ public class MultimediaConfig implements Serializable {
                 ", minDuration=" + minDuration +
                 ", maxDuration=" + maxDuration +
                 ", spanCount=" + spanCount +
+                ", dir='" + dir + '\'' +
                 ", confirmDrawable=" + confirmDrawable +
+                ", confirmTextColor=" + confirmTextColor +
                 ", confirmText='" + confirmText + '\'' +
                 '}';
     }

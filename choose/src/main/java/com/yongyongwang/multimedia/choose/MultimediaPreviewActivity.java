@@ -3,6 +3,7 @@ package com.yongyongwang.multimedia.choose;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import java.util.List;
  * @// TODO: 2021/6/6
  */
 public class MultimediaPreviewActivity extends MultimediaBaseActivity implements ViewPager.OnPageChangeListener {
+
+    private String TAG = "MultimediaPreviewActivity";
 
     public static final String PREVIEW_MODEL = "preview_model";
     public static final String PREVIEW_POSITION = "preview_position";
@@ -101,13 +104,23 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
         });
         mBottomLayout.addCheckListener(v -> {
             MultimediaEntity entity = getEntity(viewPager.getCurrentItem());
+            if (entity == null)
+                return;
             boolean flag = previewChooseItem(entity,isAll);
             mBottomLayout.setChecked(flag);
+
+            if (mChooseConfig.isOnly() && !mChooseConfig.isOnlyPreview())
+                return;
 
             /**
              * 为true表示添加成功、添加到底部列表
              */
             if (flag){
+
+                if (mChooseConfig.isOnly()){
+                    mRecyclerView.clear();
+                }
+
                 if (!mRecyclerView.isExist(entity.getPath())){
                     MultimediaPreviewEntity previewEntity = new MultimediaPreviewEntity();
                     previewEntity.setPath(entity.getPath());
@@ -156,6 +169,8 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
          * 如果已选列表不为空，则添加
          */
         if (mChooseDataSource.size() != 0){
+            if (mChooseConfig.isOnly() && !mChooseConfig.isOnlyPreview())
+                return;
             MultimediaEntity currencyEntity = getEntity(viewPager.getCurrentItem());
             List<MultimediaPreviewEntity> list = new ArrayList<>();
             for (int i = 0; i < mChooseDataSource.size(); i++) {
@@ -194,15 +209,28 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
      */
     private int getPosition(String path){
         int position = -1;
-        if (dataSource == null || dataSource.size() == 0)
-            return position;
-        for (int i = 0; i < dataSource.size(); i++) {
-            MultimediaEntity entity = dataSource.get(i);
-            if (TextUtils.equals(entity.getPath(),path)){
-                position = i;
-                break;
+        if (isAll){
+            if (dataSource == null || dataSource.size() == 0)
+                return position;
+            for (int i = 0; i < dataSource.size(); i++) {
+                MultimediaEntity entity = dataSource.get(i);
+                if (TextUtils.equals(entity.getPath(),path)){
+                    position = i;
+                    break;
+                }
+            }
+        }else {
+            if (mChooseDataSource.size() == 0)
+                return position;
+            for (int i = 0; i < mChooseDataSource.size(); i++) {
+                MultimediaEntity entity = mChooseDataSource.get(i);
+                if (TextUtils.equals(entity.getPath(),path)){
+                    position = i;
+                    break;
+                }
             }
         }
+
         return position;
     }
 
@@ -213,7 +241,7 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
      */
     private MultimediaEntity getEntity(int position){
         if (isAll){
-            return dataSource == null ? null :  dataSource.get(position);
+            return (dataSource == null || dataSource.size() == 0) ? null :  dataSource.get(position);
         }else {
             return mChooseDataSource.get(position);
         }
@@ -227,6 +255,10 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
     @Override
     public void onPageSelected(int position) {
         initPageSelected(position);
+        MultimediaEntity entity = getEntity(position);
+        if (entity != null){
+            mRecyclerView.scrollerPosition(entity.getPath());
+        }
     }
 
     @Override

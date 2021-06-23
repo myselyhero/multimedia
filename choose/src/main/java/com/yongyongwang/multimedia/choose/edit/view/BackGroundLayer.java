@@ -3,27 +3,11 @@ package com.yongyongwang.multimedia.choose.edit.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.opengl.GLES20;
 import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.yongyongwang.multimedia.choose.R;
-import com.yongyongwang.multimedia.choose.magic.MagicEngine;
-import com.yongyongwang.multimedia.choose.magic.filter.advanced.MagicBeautyFilter;
-import com.yongyongwang.multimedia.choose.magic.filter.base.gpuimage.GPUImageFilter;
-import com.yongyongwang.multimedia.choose.magic.filter.helper.MagicFilterFactory;
-import com.yongyongwang.multimedia.choose.magic.filter.helper.MagicFilterType;
-import com.yongyongwang.multimedia.choose.magic.utils.OpenGlUtils;
-import com.yongyongwang.multimedia.choose.magic.utils.Rotation;
-import com.yongyongwang.multimedia.choose.magic.utils.TextureRotationUtil;
-import com.yongyongwang.multimedia.choose.magic.widget.MagicCameraView;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 
 /**
  * @author myselyhero 

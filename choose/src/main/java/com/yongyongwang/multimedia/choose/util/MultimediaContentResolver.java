@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -227,6 +226,11 @@ public final class MultimediaContentResolver {
                                  * 如果时长大于最小时长
                                  */
                                 if (mChooseConfig.getMaxDuration() > 0 && duration > mChooseConfig.getMaxDuration()) {
+                                    continue;
+                                }
+                            }else {
+                                //
+                                if (mChooseConfig.getMaxSize() > 0 && FileUtils.formFileSize(size) > mChooseConfig.getMaxSize()){
                                     continue;
                                 }
                             }

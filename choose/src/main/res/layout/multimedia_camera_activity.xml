@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/multimedia_theme_background">
-    <com.yongyongwang.multimedia.choose.camera.JCameraView
+    <com.yongyongwang.multimedia.choose.camera.view.JCameraView
         android:id="@+id/jcameraview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

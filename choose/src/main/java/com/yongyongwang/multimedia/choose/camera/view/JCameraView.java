@@ -1,4 +1,4 @@
-package com.yongyongwang.multimedia.choose.camera;
+package com.yongyongwang.multimedia.choose.camera.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -30,7 +30,6 @@ import com.yongyongwang.multimedia.choose.camera.listener.ErrorListener;
 import com.yongyongwang.multimedia.choose.camera.listener.JCameraListener;
 import com.yongyongwang.multimedia.choose.camera.listener.TypeListener;
 import com.yongyongwang.multimedia.choose.camera.state.CameraMachine;
-import com.yongyongwang.multimedia.choose.camera.view.CameraView;
 import com.yongyongwang.multimedia.choose.photo.view.PhotoView;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
 import com.yongyongwang.multimedia.choose.util.ScreenUtils;
@@ -532,6 +531,24 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         animSet.setDuration(400);
         animSet.start();
         return true;
+    }
+
+    /**
+     *
+     * @param icon
+     */
+    public void setLeftIcon(int icon) {
+        iconLeft = icon;
+        mCaptureLayout.setLeftIcon(iconLeft);
+    }
+
+    /**
+     *
+     * @param icon
+     */
+    public void setRightIcon(int icon) {
+        iconRight = icon;
+        mCaptureLayout.setRightIcon(iconRight);
     }
 
     /**

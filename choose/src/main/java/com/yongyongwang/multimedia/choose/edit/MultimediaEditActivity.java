@@ -1,11 +1,9 @@
 package com.yongyongwang.multimedia.choose.edit;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
 
 import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
@@ -16,9 +14,7 @@ import com.yongyongwang.multimedia.choose.edit.view.MultimediaBeautifyLayout;
 import com.yongyongwang.multimedia.choose.edit.view.MultimediaEditButtonLayout;
 import com.yongyongwang.multimedia.choose.edit.view.MultimediaFilterLayout;
 import com.yongyongwang.multimedia.choose.edit.view.MultimediaRatioLayout;
-import com.yongyongwang.multimedia.choose.edit.view.TwoLineSeekBar;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
-import com.yongyongwang.multimedia.choose.magic.utils.MagicParams;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
 
 /**
@@ -59,7 +55,6 @@ public class MultimediaEditActivity extends MultimediaBaseActivity implements Vi
         adjustLayout = findViewById(R.id.multimedia_edit_adjust);
         beautifyLayout = findViewById(R.id.multimedia_edit_beautify);
 
-        MagicParams.context = this;
         FileUtils.initPath(this);
 
         backImageView.setOnClickListener(this);
@@ -90,9 +85,6 @@ public class MultimediaEditActivity extends MultimediaBaseActivity implements Vi
                 beautifyLayout.setVisibility(View.GONE);
                 adjustLayout.setVisibility(View.VISIBLE);
             }
-        });
-        filterLayout.setClickListener(type -> {
-
         });
         ratioView.setClickListener(ration -> {
             if (TextUtils.equals(ration,getString(R.string.multimedia_ration_1))){

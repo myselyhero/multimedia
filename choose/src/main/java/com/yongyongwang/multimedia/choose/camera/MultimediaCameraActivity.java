@@ -6,21 +6,24 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
+import com.yongyongwang.multimedia.choose.MultimediaConfig;
 import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.listener.ErrorListener;
 import com.yongyongwang.multimedia.choose.camera.listener.JCameraListener;
+import com.yongyongwang.multimedia.choose.camera.view.JCameraView;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
 import com.yongyongwang.multimedia.choose.util.ToastUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author myselyhero 
@@ -62,27 +65,29 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
     @Override
     protected void initView() {
         jCameraView = findViewById(R.id.jcameraview);
+
         jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
-        FileUtils.initPath(this);
-        jCameraView.setSaveVideoPath(FileUtils.DIR);
+        if (TextUtils.isEmpty(mChooseConfig.getDir()))
+            FileUtils.initPath(this);
+        jCameraView.setSaveVideoPath(TextUtils.isEmpty(mChooseConfig.getDir()) ? FileUtils.DIR : mChooseConfig.getDir());
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
         jCameraView.setErrorLisenter(new ErrorListener() {
             @Override
             public void onError() {
-                ToastUtil.showShort(MultimediaCameraActivity.this,"摄像头打开失败！");
+                ToastUtil.showShort(MultimediaCameraActivity.this,getString(R.string.multimedia_camera_error));
             }
 
             @Override
             public void AudioPermissionError() {
-                ToastUtil.showShort(MultimediaCameraActivity.this,"没有录音权限！");
+                ToastUtil.showShort(MultimediaCameraActivity.this,getString(R.string.multimedia_camera_no_permission));
             }
         });
         jCameraView.setJCameraLisenter(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
-                String path = FileUtils.saveBitmap(MultimediaCameraActivity.this,FileUtils.DIR, bitmap);
+                String path = FileUtils.saveBitmap(MultimediaCameraActivity.this,TextUtils.isEmpty(mChooseConfig.getDir()) ? FileUtils.DIR : mChooseConfig.getDir(), bitmap);
                 if (TextUtils.isEmpty(path)){
-                    ToastUtil.showShort(MultimediaCameraActivity.this,"图片保存失败！");
+                    ToastUtil.showShort(MultimediaCameraActivity.this,getString(R.string.multimedia_camera_save_error));
                     finish();
                     return;
                 }
@@ -92,10 +97,8 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
                 int[] size = FileUtils.getImageSize(path);
                 entity.setWidth(size[0]);
                 entity.setHeight(size[1]);
-                Intent intent = new Intent();
-                intent.putExtra(MULTIMEDIA_RESULT_DATA,entity);
-                setResult(RESULT_OK,intent);
-                finish();
+
+                complete(entity);
             }
 
             @Override
@@ -112,18 +115,13 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
                 entity.setWidth(size[0]);
                 entity.setHeight(size[1]);
                 entity.setDuration(duration);
-                Intent intent = new Intent();
-                intent.putExtra(MULTIMEDIA_RESULT_DATA,entity);
-                setResult(RESULT_OK,intent);
-                finish();
+
+                complete(entity);
             }
         });
 
         jCameraView.setLeftClickListener(v -> {
             finish();
-        });
-        jCameraView.setRightClickListener(v -> {
-            Log.e(TAG, "initView: 点击右边按钮");
         });
     }
 
@@ -142,5 +140,22 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
     @Override
     protected void onUpdatePreview(int num) {
 
+    }
+
+    /**
+     *
+     * @param entity
+     */
+    protected void complete(MultimediaEntity entity){
+        if (MultimediaConfig.cameraListener != null){
+            List<MultimediaEntity> list = new ArrayList<>();
+            list.add(entity);
+            MultimediaConfig.cameraListener.onResult(list);
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra(MULTIMEDIA_RESULT_DATA, entity);
+            setResult(RESULT_OK,intent);
+        }
+        finish();
     }
 }

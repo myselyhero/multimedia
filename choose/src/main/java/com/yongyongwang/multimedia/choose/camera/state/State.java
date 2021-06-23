@@ -3,7 +3,7 @@ package com.yongyongwang.multimedia.choose.camera.state;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import com.yongyongwang.multimedia.choose.camera.CameraInterface;
+import com.yongyongwang.multimedia.choose.camera.view.CameraInterface;
 
 /**
  *
