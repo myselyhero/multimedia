@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.camera.listener.CaptureListener;
 import com.yongyongwang.multimedia.choose.camera.listener.TypeListener;
 
@@ -46,6 +47,7 @@ public class CaptureLayout extends FrameLayout {
     private int button_size;
     private int iconLeft = 0;
     private int iconRight = 0;
+    private int status = JCameraView.BUTTON_STATE_BOTH;
 
     private boolean isFirst = true;
 
@@ -216,7 +218,7 @@ public class CaptureLayout extends FrameLayout {
         txt_tip = new TextView(getContext());
         LayoutParams txt_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         txt_param.gravity = Gravity.CENTER_HORIZONTAL;
-        txt_tip.setText("轻触拍照，长按摄像");
+        txt_tip.setText(getTips());
         txt_tip.setTextColor(0xFFFFFFFF);
         txt_tip.setGravity(Gravity.CENTER);
         txt_tip.setLayoutParams(txt_param);
@@ -244,6 +246,21 @@ public class CaptureLayout extends FrameLayout {
             iv_custom_right.setVisibility(VISIBLE);
     }
 
+    /**
+     * 获取提示
+     * @return
+     */
+    private String getTips(){
+        String str;
+        if (status == JCameraView.BUTTON_STATE_ONLY_CAPTURE){
+            str = getContext().getString(R.string.multimedia_camera_picture_tips);
+        }else if (status == JCameraView.BUTTON_STATE_ONLY_RECORDER){
+            str = getContext().getString(R.string.multimedia_camera_video_tips);
+        }else {
+            str = getContext().getString(R.string.multimedia_camera_tips);
+        }
+        return str;
+    }
 
     public void startAlphaAnimation() {
         if (isFirst) {
@@ -257,16 +274,30 @@ public class CaptureLayout extends FrameLayout {
     public void setTextWithAnimation(String tip) {
         txt_tip.setText(tip);
         ObjectAnimator animator_txt_tip = ObjectAnimator.ofFloat(txt_tip, "alpha", 0f, 1f, 1f, 0f);
-        animator_txt_tip.setDuration(2500);
+        animator_txt_tip.setDuration(3000);
         animator_txt_tip.start();
     }
 
+    /**
+     *
+     * @param duration
+     */
     public void setDuration(int duration) {
         btn_capture.setDuration(duration);
     }
 
+    /**
+     *
+     * @param duration
+     */
+    public void setMinDuration(int duration){
+        btn_capture.setMinDuration(duration);
+    }
+
     public void setButtonFeatures(int state) {
+        this.status = state;
         btn_capture.setButtonFeatures(state);
+        txt_tip.setText(getTips());
     }
 
     public void setTip(String tip) {

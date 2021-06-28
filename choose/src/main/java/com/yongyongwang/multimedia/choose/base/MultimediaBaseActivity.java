@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,8 +50,8 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
     /**
      *
      */
-    public static final String MULTIMEDIA_REQUEST_DATA = "multimedia_request";
-    public static final String MULTIMEDIA_RESULT_DATA = "multimedia_result";
+    public static final String REQUEST_DATA = "multimedia_request";
+    public static final String RESULT_DATA = "multimedia_result";
 
     /**
      * 文件夹数据源
@@ -107,7 +106,7 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
             MultimediaConfig.resultListener.onResult(mChooseDataSource);
         }else {
             Intent intent = new Intent();
-            intent.putExtra(MULTIMEDIA_RESULT_DATA, (Serializable) mChooseDataSource);
+            intent.putExtra(RESULT_DATA, (Serializable) mChooseDataSource);
             setResult(RESULT_OK,intent);
         }
     }

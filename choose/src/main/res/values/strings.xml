@@ -27,6 +27,10 @@
     <string name="multimedia_camera_error">摄像头打开失败！</string>
     <string name="multimedia_camera_no_permission">没有录音权限！</string>
     <string name="multimedia_camera_save_error">保存失败！</string>
+    <string name="multimedia_camera_tips">轻触拍照，长按摄像</string>
+    <string name="multimedia_camera_picture_tips">轻触拍照</string>
+    <string name="multimedia_camera_video_tips">长按摄像</string>
+    <string name="multimedia_camera_short">录制时间过短</string>
 
     <string name="multimedia_edit_crop">剪裁</string>
     <string name="multimedia_edit_filter">滤镜</string>

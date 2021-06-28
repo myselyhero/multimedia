@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">multimedia</string>
+
+    <string name="photo">图片选择</string>
+    <string name="camera">拍照/录像</string>
+    <string name="player">视频播放</string>
+
+    <string name="photo_all">全部</string>
+    <string name="photo_img">图片</string>
+    <string name="photo_video">视频</string>
+    <string name="photo_only">单选</string>
+    <string name="photo_only_preview">展示已选列表</string>
+    <string name="photo_shade">选中阴影</string>
+    <string name="photo_min_num">最小数量(3)</string>
+    <string name="photo_max_num">最大数量(9)</string>
+    <string name="photo_mixture">混合选择</string>
+    <string name="photo_span_count_three">列数(3)</string>
+    <string name="photo_span_count_four">列数(4)</string>
+    <string name="photo_max_size">过滤Size(10M)</string>
+    <string name="photo_crop">剪切</string>
+    <string name="photo_camera">拍摄</string>
+    <string name="photo_min_duration">最小时长</string>
+    <string name="photo_max_duration">最大时长</string>
+    <string name="photo_gif">GIF</string>
+
+    <string name="camera_all">拍照/录像</string>
+    <string name="camera_picture">拍照</string>
+    <string name="came_record">录像</string>
+    <string name="came_record_max_duration">最大时长(60s)</string>
+    <string name="came_record_min_duration">最小时长(5s)</string>
+
+    <string name="player_mute">静音</string>
+    <string name="player_loop">循环</string>
+    <string name="player_auto">自动播放</string>
 </resources>

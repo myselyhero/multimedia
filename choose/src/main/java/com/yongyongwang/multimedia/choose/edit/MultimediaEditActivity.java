@@ -98,7 +98,7 @@ public class MultimediaEditActivity extends MultimediaBaseActivity implements Vi
             }
         });
 
-        mEntity = (MultimediaEntity) getIntent().getSerializableExtra(MULTIMEDIA_REQUEST_DATA);
+        mEntity = (MultimediaEntity) getIntent().getSerializableExtra(REQUEST_DATA);
         if (mEntity != null){
             cropView.setImage(mEntity.getPath());
         }

@@ -66,7 +66,16 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
     protected void initView() {
         jCameraView = findViewById(R.id.jcameraview);
 
-        jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
+        if (mChooseConfig.getCameraType() > 0 && mChooseConfig.getCameraType() == JCameraView.BUTTON_STATE_ONLY_CAPTURE ||
+                mChooseConfig.getCameraType() == JCameraView.BUTTON_STATE_ONLY_RECORDER){
+            jCameraView.setFeatures(mChooseConfig.getCameraType());
+        }else {
+            jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
+        }
+        if (mChooseConfig.getRecordMaxDuration() > 3000)
+            jCameraView.setDuration(mChooseConfig.getRecordMaxDuration());
+        if (mChooseConfig.getRecordMinDuration() > 1000)
+            jCameraView.setMinDuration(mChooseConfig.getRecordMinDuration());
         if (TextUtils.isEmpty(mChooseConfig.getDir()))
             FileUtils.initPath(this);
         jCameraView.setSaveVideoPath(TextUtils.isEmpty(mChooseConfig.getDir()) ? FileUtils.DIR : mChooseConfig.getDir());
@@ -120,9 +129,20 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
             }
         });
 
-        jCameraView.setLeftClickListener(v -> {
-            finish();
-        });
+        if (mChooseConfig.getLeftIcon() > 0)
+            jCameraView.setLeftIcon(mChooseConfig.getLeftIcon());
+        if (mChooseConfig.getRightIcon() > 0)
+            jCameraView.setRightIcon(mChooseConfig.getRightIcon());
+
+        if (MultimediaConfig.leftIconListener != null){
+            jCameraView.setLeftClickListener(MultimediaConfig.leftIconListener);
+        }else {
+            jCameraView.setLeftClickListener(v -> {
+                finish();
+            });
+        }
+        if (MultimediaConfig.rightIconListener != null)
+            jCameraView.setRightClickListener(MultimediaConfig.rightIconListener);
     }
 
     @Override
@@ -153,7 +173,7 @@ public class MultimediaCameraActivity extends MultimediaBaseActivity {
             MultimediaConfig.cameraListener.onResult(list);
         }else {
             Intent intent = new Intent();
-            intent.putExtra(MULTIMEDIA_RESULT_DATA, entity);
+            intent.putExtra(RESULT_DATA, entity);
             setResult(RESULT_OK,intent);
         }
         finish();

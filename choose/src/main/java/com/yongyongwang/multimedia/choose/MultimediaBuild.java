@@ -3,7 +3,8 @@ package com.yongyongwang.multimedia.choose;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
+import android.text.TextUtils;
+import android.view.View;
 
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
@@ -83,7 +84,7 @@ public class MultimediaBuild {
      * @param maxNum
      * @return
      */
-    public MultimediaBuild setMaxNum(int maxNum){
+    public MultimediaBuild maxNum(int maxNum){
         mChooseConfig.setMaxNum(maxNum);
         return this;
     }
@@ -93,17 +94,17 @@ public class MultimediaBuild {
      * @param minNum
      * @return
      */
-    public MultimediaBuild setMinNum(int minNum){
+    public MultimediaBuild minNum(int minNum){
         mChooseConfig.setMinNum(minNum);
         return this;
     }
 
     /**
-     *
+     * 混合选择(图片/视频)
      * @param mixture
      * @return
      */
-    public MultimediaBuild isMixture(boolean mixture){
+    public MultimediaBuild mixture(boolean mixture){
         mChooseConfig.setMixture(mixture);
         return this;
     }
@@ -113,17 +114,17 @@ public class MultimediaBuild {
      * @param spanCount
      * @return
      */
-    public MultimediaBuild setSpanCount(int spanCount){
+    public MultimediaBuild spanCount(int spanCount){
         mChooseConfig.setSpanCount(spanCount);
         return this;
     }
 
     /**
-     * 图片的最大（超过后过滤）
+     * 过滤图片的最大大小
      * @param size MB
      * @return
      */
-    public MultimediaBuild setMaxSize(int size){
+    public MultimediaBuild maxSize(int size){
         mChooseConfig.setMaxSize(size);
         return this;
     }
@@ -159,7 +160,7 @@ public class MultimediaBuild {
     }
 
     /**
-     *
+     * 过滤小于该值视频
      * @param duration
      * @return
      */
@@ -169,7 +170,7 @@ public class MultimediaBuild {
     }
 
     /**
-     *
+     * 过滤大于该值视频
      * @param duration
      * @return
      */
@@ -189,7 +190,7 @@ public class MultimediaBuild {
     }
 
     /**
-     *
+     * 产生的图片/视频自定义保存地址
      * @param dir
      * @return
      */
@@ -199,7 +200,7 @@ public class MultimediaBuild {
     }
 
     /**
-     *
+     * 确认按钮
      * @param text
      * @return
      */
@@ -229,6 +230,111 @@ public class MultimediaBuild {
     }
 
     /**
+     * 静音
+     * @param mute
+     * @return
+     */
+    public MultimediaBuild mute(boolean mute){
+        mChooseConfig.setMute(mute);
+        return this;
+    }
+
+    /**
+     * 播放器是否循环
+     * @param loop
+     * @return
+     */
+    public MultimediaBuild isLoop(boolean loop){
+        mChooseConfig.setLoop(loop);
+        return this;
+    }
+
+    /**
+     * 是否自动播放
+     * @param auto
+     * @return
+     */
+    public MultimediaBuild autoPlayer(boolean auto){
+        mChooseConfig.setAutoPlayer(auto);
+        return this;
+    }
+
+    /**
+     * {@link com.yongyongwang.multimedia.choose.camera.view.JCameraView}
+     * @param type BUTTON_STATE_BOTH 拍照/录像 BUTTON_STATE_ONLY_CAPTURE 拍照
+     *             BUTTON_STATE_ONLY_RECORDER 录像
+     * @return
+     */
+    public MultimediaBuild cameraType(int type){
+        mChooseConfig.setCameraType(type);
+        return this;
+    }
+
+    /**
+     * 视频最大录制时长
+     * @param duration
+     * @return
+     */
+    public MultimediaBuild recordMaxDuration(int duration){
+        if (duration < 0)
+            return this;
+        mChooseConfig.setRecordMaxDuration(duration);
+        return this;
+    }
+
+    /**
+     * 视频最小录制时长
+     * @param duration
+     * @return
+     */
+    public MultimediaBuild recordMinDuration(int duration){
+        if (duration < 0)
+            return this;
+        mChooseConfig.setRecordMinDuration(duration);
+        return this;
+    }
+
+    /**
+     *
+     * @param leftIcon
+     * @return
+     */
+    public MultimediaBuild leftIcon(int leftIcon){
+        mChooseConfig.setLeftIcon(leftIcon);
+        return this;
+    }
+
+    /**
+     *
+     * @param listener
+     * @return
+     */
+    public MultimediaBuild leftIconClickListener(View.OnClickListener listener){
+        MultimediaConfig.leftIconListener = new WeakReference<>(listener).get();
+        return this;
+    }
+
+    /**
+     *
+     * @param rightIcon
+     * @return
+     */
+    public MultimediaBuild rightIcon(int rightIcon){
+        mChooseConfig.setRightIcon(rightIcon);
+        return this;
+    }
+
+    /**
+     *
+     * @param listener
+     * @return
+     */
+    public MultimediaBuild rightIconClickListener(View.OnClickListener listener){
+        MultimediaConfig.rightIconListener = new WeakReference<>(listener).get();
+        return this;
+    }
+
+    /**
      *
      * @param resultListener
      */
@@ -250,6 +356,19 @@ public class MultimediaBuild {
         Intent intent = new Intent(mActivity.get(), MultimediaActivity.class);
         intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
         mActivity.get().startActivityForResult(intent,requestCode);
+    }
+
+    /**
+     *
+     * @param url
+     */
+    public void startPlayer(String url){
+        if (TextUtils.isEmpty(url))
+            return;
+        Intent intent = new Intent(mActivity.get(), MultimediaPlayerActivity.class);
+        intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
+        intent.putExtra(MultimediaBaseActivity.REQUEST_DATA,url);
+        mActivity.get().startActivity(intent);
     }
 
     /**
