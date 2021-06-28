@@ -66,8 +66,6 @@ public class LwjCommonControllerView extends LwjControllerBaseView implements Vi
                 seekTo(seekBar.getProgress());
             }
         });
-
-        setMute(isVoice());
     }
 
     @Override

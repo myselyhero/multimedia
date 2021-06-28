@@ -100,6 +100,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private int iconLeft;       //左图标
     private int iconRight;      //右图标
     private int duration;       //录制时间
+    private int minDuration;   //最短录制时间
 
     //缩放梯度
     private int zoomGradient = 0;
@@ -127,6 +128,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         iconLeft = a.getResourceId(R.styleable.JCameraView_iconLeft, 0);
         iconRight = a.getResourceId(R.styleable.JCameraView_iconRight, 0);
         duration = a.getInteger(R.styleable.JCameraView_duration_max, 10 * 1000);       //没设置默认为10s
+        minDuration = a.getInteger(R.styleable.JCameraView_duration_min,2000);
         a.recycle();
         initData();
         initView();
@@ -158,6 +160,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         });
         mCaptureLayout = (CaptureLayout) findViewById(R.id.capture_layout);
         mCaptureLayout.setDuration(duration);
+        mCaptureLayout.setMinDuration(minDuration);
         if (iconLeft > 0)
             mCaptureLayout.setLeftIcon(iconLeft);
         if (iconRight > 0)
@@ -186,7 +189,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
             @Override
             public void recordShort(final long time) {
-                mCaptureLayout.setTextWithAnimation("录制时间过短");
+                mCaptureLayout.setTextWithAnimation(getContext().getString(R.string.multimedia_camera_short));
                 mSwitchCamera.setVisibility(VISIBLE);
                 mFlashLamp.setVisibility(VISIBLE);
                 postDelayed(new Runnable() {
@@ -258,6 +261,24 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         resetState(TYPE_PICTURE);
         CameraInterface.getInstance().isPreview(false);
         CameraInterface.getInstance().unregisterSensorManager(mContext);
+    }
+
+    /***
+     *
+     * @param duration
+     */
+    public void setDuration(int duration){
+        if (mCaptureLayout != null)
+            mCaptureLayout.setDuration(duration);
+    }
+
+    /**
+     *
+     * @param duration
+     */
+    public void setMinDuration(int duration){
+        if (mCaptureLayout != null)
+            mCaptureLayout.setMinDuration(duration);
     }
 
     //SurfaceView生命周期

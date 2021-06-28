@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="@color/multimedia_theme_background">
     <LinearLayout
+        android:background="@color/multimedia_theme"
         android:layout_width="match_parent"
         android:layout_height="@dimen/multimedia_common_height">
         <ImageView

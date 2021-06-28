@@ -1,5 +1,7 @@
 package com.yongyongwang.multimedia.choose;
 
+import android.view.View;
+
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.io.Serializable;
@@ -119,6 +121,32 @@ public class MultimediaConfig implements Serializable {
     private int confirmDrawable;
     private int confirmTextColor;
     private String confirmText;
+
+    /**
+     * 是否循环播放
+     */
+    private boolean isLoop;
+
+    /**
+     * 静音
+     */
+    private boolean isMute;
+
+    /**
+     * 是否自动播放
+     */
+    private boolean isAutoPlayer;
+
+    /**
+     * 拍照页面左右按钮图片
+     */
+    private int cameraType;
+    private int recordMaxDuration;
+    private int recordMinDuration;
+    private int leftIcon;
+    private int rightIcon;
+    public static View.OnClickListener leftIconListener;
+    public static View.OnClickListener rightIconListener;
 
     /**
      *
@@ -282,6 +310,70 @@ public class MultimediaConfig implements Serializable {
         this.confirmText = confirmText;
     }
 
+    public boolean isLoop() {
+        return isLoop;
+    }
+
+    public void setLoop(boolean loop) {
+        isLoop = loop;
+    }
+
+    public boolean isMute() {
+        return isMute;
+    }
+
+    public void setMute(boolean mute) {
+        isMute = mute;
+    }
+
+    public boolean isAutoPlayer() {
+        return isAutoPlayer;
+    }
+
+    public void setAutoPlayer(boolean autoPlayer) {
+        isAutoPlayer = autoPlayer;
+    }
+
+    public int getCameraType() {
+        return cameraType;
+    }
+
+    public void setCameraType(int cameraType) {
+        this.cameraType = cameraType;
+    }
+
+    public int getRecordMaxDuration() {
+        return recordMaxDuration;
+    }
+
+    public void setRecordMaxDuration(int recordMaxDuration) {
+        this.recordMaxDuration = recordMaxDuration;
+    }
+
+    public int getRecordMinDuration() {
+        return recordMinDuration;
+    }
+
+    public void setRecordMinDuration(int recordMinDuration) {
+        this.recordMinDuration = recordMinDuration;
+    }
+
+    public int getLeftIcon() {
+        return leftIcon;
+    }
+
+    public void setLeftIcon(int leftIcon) {
+        this.leftIcon = leftIcon;
+    }
+
+    public int getRightIcon() {
+        return rightIcon;
+    }
+
+    public void setRightIcon(int rightIcon) {
+        this.rightIcon = rightIcon;
+    }
+
     @Override
     public String toString() {
         return "MultimediaConfig{" +
@@ -291,6 +383,7 @@ public class MultimediaConfig implements Serializable {
                 ", only=" + only +
                 ", onlyPreview=" + onlyPreview +
                 ", shade=" + shade +
+                ", maxSize=" + maxSize +
                 ", crop=" + crop +
                 ", compress=" + compress +
                 ", mixture=" + mixture +
@@ -303,6 +396,14 @@ public class MultimediaConfig implements Serializable {
                 ", confirmDrawable=" + confirmDrawable +
                 ", confirmTextColor=" + confirmTextColor +
                 ", confirmText='" + confirmText + '\'' +
+                ", isLoop=" + isLoop +
+                ", isMute=" + isMute +
+                ", isAutoPlayer=" + isAutoPlayer +
+                ", cameraType=" + cameraType +
+                ", recordMaxDuration=" + recordMaxDuration +
+                ", recordMinDuration=" + recordMinDuration +
+                ", leftIcon=" + leftIcon +
+                ", rightIcon=" + rightIcon +
                 '}';
     }
 }

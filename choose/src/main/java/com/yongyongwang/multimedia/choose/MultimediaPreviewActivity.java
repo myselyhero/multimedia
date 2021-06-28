@@ -3,7 +3,6 @@ package com.yongyongwang.multimedia.choose;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,7 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
             if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
                 return;
             Intent intent = new Intent(this, MultimediaEditActivity.class);
-            intent.putExtra(MULTIMEDIA_REQUEST_DATA,entity);
+            intent.putExtra(REQUEST_DATA,entity);
             startActivity(intent);
         });
         mBottomLayout.addCheckListener(v -> {
@@ -255,6 +254,8 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
     @Override
     public void onPageSelected(int position) {
         initPageSelected(position);
+        if (mChooseConfig.isOnly() && !mChooseConfig.isOnlyPreview())
+            return;
         MultimediaEntity entity = getEntity(position);
         if (entity != null){
             mRecyclerView.scrollerPosition(entity.getPath());
@@ -299,7 +300,7 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
                 GlideEngine.loader(MultimediaPreviewActivity.this,mediaEntity.getPath(),imageView);
                 playerImageView.setOnClickListener(v -> {
                     Intent intent = new Intent(MultimediaPreviewActivity.this,MultimediaPlayerActivity.class);
-                    intent.putExtra(MULTIMEDIA_REQUEST_DATA,mediaEntity.getPath());
+                    intent.putExtra(REQUEST_DATA,mediaEntity.getPath());
                     startActivity(intent);
                 });
 

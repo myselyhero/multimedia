@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:background="@color/multimedia_theme_background">
+    <TextView
+        android:id="@+id/item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:text="哈哈"/>
+    <ImageView
+        android:id="@+id/item_iv"
+        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/item_choose"/>
+</LinearLayout>

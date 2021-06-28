@@ -1,6 +1,7 @@
 package com.yongyongwang.multimedia.choose;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,13 +35,19 @@ public class MultimediaPlayerActivity extends MultimediaBaseActivity implements 
 
         backImageView.setOnClickListener(this);
 
-        mPath = getIntent().getStringExtra(MULTIMEDIA_REQUEST_DATA);
-        lwjPlayerView.setControllerView(new LwjCommonControllerView(this));
+        mPath = getIntent().getStringExtra(REQUEST_DATA);
+        if (TextUtils.isEmpty(mPath))
+            return;
+
+        LwjCommonControllerView view = new LwjCommonControllerView(this);
+        lwjPlayerView.setControllerView(view);
         if (!TextUtils.isEmpty(mPath)){
-            lwjPlayerView.setVoice(true);
+            lwjPlayerView.setVoice(mChooseConfig.isMute());
+            view.setMute(mChooseConfig.isMute());
+            lwjPlayerView.setLooping(mChooseConfig.isLoop());
             lwjPlayerView.setDataSource(mPath);
-            lwjPlayerView.setVoice(false);
-            lwjPlayerView.onStart();
+            if (mChooseConfig.isAutoPlayer())
+                lwjPlayerView.onStart();
         }
     }
 

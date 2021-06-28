@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
-import com.yongyongwang.multimedia.choose.compress.Luban;
-import com.yongyongwang.multimedia.choose.compress.model.OnCompressListener;
 import com.yongyongwang.multimedia.choose.edit.MultimediaEditActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
@@ -25,8 +23,8 @@ import com.yongyongwang.multimedia.choose.util.ProgressManagerKit;
 import com.yongyongwang.multimedia.choose.view.MultimediaBottomLayout;
 import com.yongyongwang.multimedia.choose.view.MultimediaRecyclerView;
 import com.yongyongwang.multimedia.choose.view.MultimediaTopLayout;
+import com.yongyongwang.multimedia.choose.view.TransitionView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +38,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
 
     private static final String TAG = MultimediaActivity.class.getSimpleName();
 
-    private int count;
-
+    private TransitionView transitionView;
     private MultimediaTopLayout mTopLayout;
     private MultimediaBottomLayout mBottomLayout;
     private MultimediaRecyclerView mRecyclerView;
@@ -66,6 +63,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         mTopLayout = findViewById(R.id.multimedia_top);
         mBottomLayout = findViewById(R.id.multimedia_bottom);
         mRecyclerView = findViewById(R.id.multimedia_item);
+        transitionView = findViewById(R.id.multimedia_transition);
 
         mRecyclerView.setCamera(mChooseConfig.isCamera());
         mRecyclerView.setShade(mChooseConfig.isShade());
@@ -124,7 +122,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
                 return;
             Intent intent = new Intent(this, MultimediaEditActivity.class);
-            intent.putExtra(MULTIMEDIA_REQUEST_DATA,entity);
+            intent.putExtra(REQUEST_DATA,entity);
             startActivity(intent);
         });
         mBottomLayout.addPreviewClickListener(v -> {
@@ -135,6 +133,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             startActivityForResult(intent,COMMON_CODE);
         });
 
+        transitionView.onLoader();
         if (checkReadAndWrite(this)){
             loadFolder();
         }
@@ -170,6 +169,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                 if (num == 0){
                     loadFolder();
                 }else {
+                    transitionView.onEmpty();
                     Log.e(TAG, "onRequestPermissionsResult: 读写权限未授予！");
                 }
                 break;
@@ -198,7 +198,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                     }
                     break;
                 case COMMON_CAMERA_CODE:
-                    MultimediaEntity entity = (MultimediaEntity) data.getSerializableExtra(MULTIMEDIA_RESULT_DATA);
+                    MultimediaEntity entity = (MultimediaEntity) data.getSerializableExtra(RESULT_DATA);
                     if (entity == null)
                         return;
                     clearChoose();
@@ -243,10 +243,14 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             @Override
             public void run() {
                 if (data == null || data.size() == 0){
+                    transitionView.onEmpty();
                 }else {
-                    if (mRecyclerView.getVisibility() == View.GONE){
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                    }
+                    transitionView.onSuccess();
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerView.animate()
+                            .alpha(1f)
+                            .setDuration(1000)
+                            .setListener(null);
                     mFolderDataSource.addAll(data);
                     mTopLayout.init(mFolderDataSource);
                     MultimediaFolderEntity folderEntity = mFolderDataSource.get(0);
