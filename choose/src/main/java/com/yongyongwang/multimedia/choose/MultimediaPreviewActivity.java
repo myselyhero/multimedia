@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -47,6 +48,7 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
     private List<MultimediaEntity> dataSource;
     private ViewPager viewPager;
     private ViewPageAdapter mAdapter;
+    private RelativeLayout background;
     private MultimediaPreviewTopLayout mTopLayout;
     private MultimediaPreviewBottomLayout mBottomLayout;
 
@@ -60,10 +62,12 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
     @Override
     protected void initView() {
         viewPager = findViewById(R.id.multimedia_preview_pager);
+        background = findViewById(R.id.multimedia_preview_bg);
         mTopLayout = findViewById(R.id.multimedia_preview_top);
         mBottomLayout = findViewById(R.id.multimedia_preview_bottom);
         mRecyclerView = findViewById(R.id.multimedia_preview_item);
 
+        background.setBackgroundColor(mChooseConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme_background) : getResources().getColor(R.color.multimedia_white_background));
         mTopLayout.setConfig(mChooseConfig);
         mBottomLayout.setConfig(mChooseConfig);
         mTopLayout.setCheckedNum(mChooseDataSource.size());

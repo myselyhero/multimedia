@@ -19,6 +19,7 @@ import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
+import com.yongyongwang.multimedia.choose.util.StatusBarUtil;
 import com.yongyongwang.multimedia.choose.util.SystemBarTintManager;
 import com.yongyongwang.multimedia.choose.util.ToastUtil;
 
@@ -67,12 +68,17 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /** 设置状态栏颜色 */
-        SystemBarTintManager.setStatusBarColor(this,R.color.multimedia_theme);
-
         mChooseConfig = (MultimediaConfig) getIntent().getSerializableExtra(MULTIMEDIA_CONFIG);
         if (mChooseConfig == null)
             mChooseConfig = MultimediaConfig.getInstance();
+
+        /** 设置状态栏颜色 */
+        if (mChooseConfig.isDarkTheme()){
+            StatusBarUtil.setStatusBarColor(this,R.color.multimedia_theme);
+        }else {
+            StatusBarUtil.setStatusBarColor(this,R.color.multimedia_white_theme);
+            StatusBarUtil.setStatusBarDarkTheme(this,true);
+        }
 
         if (getLayoutId() > 0){
             setContentView(getLayoutId());

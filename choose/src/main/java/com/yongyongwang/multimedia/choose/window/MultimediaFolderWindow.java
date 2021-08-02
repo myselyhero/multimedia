@@ -33,15 +33,20 @@ import java.util.List;
 public class MultimediaFolderWindow extends PopupWindow {
 
     private Context mContext;
+    private boolean isFlag;
     private List<MultimediaFolderEntity> dataSource;
     private OnMultimediaFolderWindowListener windowListener;
 
     /**
      *
      * @param context
+     * @param data
+     * @param flag
+     * @param listener
      */
-    public MultimediaFolderWindow(Context context, List<MultimediaFolderEntity> data, OnMultimediaFolderWindowListener listener){
+    public MultimediaFolderWindow(Context context, List<MultimediaFolderEntity> data,boolean flag, OnMultimediaFolderWindowListener listener){
         mContext = context;
+        isFlag = flag;
         dataSource = data;
         windowListener = listener;
 
@@ -59,6 +64,8 @@ public class MultimediaFolderWindow extends PopupWindow {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         MultimediaFolderWindowAdapter adapter = new MultimediaFolderWindowAdapter();
         recyclerView.setAdapter(adapter);
+
+        view.setBackground(flag ? context.getResources().getDrawable(R.drawable.multimedia_folder_black_background) : context.getResources().getDrawable(R.drawable.multimedia_folder_white_background));
 
         setContentView(view);
         update();//刷新mPopupWindow
@@ -92,6 +99,7 @@ public class MultimediaFolderWindow extends PopupWindow {
                 GlideEngine.loader(mContext,entity.getPath(),holder.imageView);
             }
 
+            holder.textView.setTextColor(isFlag ? mContext.getResources().getColor(R.color.white) : mContext.getResources().getColor(R.color.multimedia_white_black));
             String str = entity.getFolder()+" ("+entity.getNum()+")";
             SpannableString spannableString = new SpannableString(str);
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#565656")), entity.getFolder().length(),str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

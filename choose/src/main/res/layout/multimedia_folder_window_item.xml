@@ -36,5 +36,5 @@
         android:layout_marginLeft="45dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#6f6f6f"/>
+        android:background="#EBEDF2"/>
 </RelativeLayout>

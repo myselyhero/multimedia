@@ -3,8 +3,8 @@ package com.yongyongwang.multimedia.choose;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,9 +36,8 @@ import java.util.List;
  */
 public class MultimediaActivity extends MultimediaBaseActivity implements MultimediaContentFolderListener,MultimediaContentListener {
 
-    private static final String TAG = MultimediaActivity.class.getSimpleName();
-
     private TransitionView transitionView;
+
     private MultimediaTopLayout mTopLayout;
     private MultimediaBottomLayout mBottomLayout;
     private MultimediaRecyclerView mRecyclerView;
@@ -60,6 +59,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
 
     @Override
     protected void initView() {
+        RelativeLayout background = findViewById(R.id.multimedia_bg);
         mTopLayout = findViewById(R.id.multimedia_top);
         mBottomLayout = findViewById(R.id.multimedia_bottom);
         mRecyclerView = findViewById(R.id.multimedia_item);
@@ -67,11 +67,12 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
 
         mRecyclerView.setCamera(mChooseConfig.isCamera());
         mRecyclerView.setShade(mChooseConfig.isShade());
-        mTopLayout.setConfig(mChooseConfig);
-        mBottomLayout.setConfig(mChooseConfig);
         if (mChooseConfig.getSpanCount() > 0){
             mRecyclerView.setSpanCount(mChooseConfig.getSpanCount());
         }
+        mTopLayout.setConfig(mChooseConfig);
+        mBottomLayout.setConfig(mChooseConfig);
+        background.setBackgroundColor(mChooseConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme_background) : getResources().getColor(R.color.multimedia_white_background));
 
         mRecyclerView.setAdapterListener(new MultimediaRecyclerView.OnMultimediaAdapterListener() {
             @Override
@@ -108,8 +109,10 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             @Override
             public void onFolderChoose(MultimediaFolderEntity entity) {
                 if (entity.getData() == null || entity.getData().size() == 0){
+                    mRecyclerView.setVisibility(View.GONE);
+                    transitionView.onLoader();
                     if (contentResolver != null)
-                        contentResolver.loadMultimedia( entity.getBucketId(), MultimediaActivity.this);
+                        contentResolver.loadMultimedia(entity.getBucketId(), MultimediaActivity.this);
                 }else {
                     mRecyclerView.setDataSource(entity.getData());
                 }
@@ -157,6 +160,9 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if (requestCode != PERMISSION_REQUEST_CODE && requestCode != PERMISSION_REQUEST_CAMERA)
+            return;
+
         int num = 0;
         for (int result : grantResults) {
             if (result == PackageManager.PERMISSION_DENIED) {
@@ -170,13 +176,10 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                     loadFolder();
                 }else {
                     transitionView.onEmpty();
-                    Log.e(TAG, "onRequestPermissionsResult: 读写权限未授予！");
                 }
                 break;
             case PERMISSION_REQUEST_CAMERA:
-                if (num > 0){
-                    Log.e(TAG, "onRequestPermissionsResult: 拍照、录音权限未授予！");
-                }else {
+                if (num == 0){
                     Intent intent = new Intent(MultimediaActivity.this,MultimediaCameraActivity.class);
                     startActivityForResult(intent,COMMON_CAMERA_CODE);
                 }
@@ -268,8 +271,10 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             public void run() {
                 if (data == null || data.size() == 0){
                     mRecyclerView.setVisibility(View.GONE);
+                    transitionView.onEmpty();
                 }else {
-                    if (mRecyclerView.getVisibility() == View.GONE){
+                    if (mRecyclerView.getVisibility() != View.VISIBLE){
+                        transitionView.onSuccess();
                         mRecyclerView.setVisibility(View.VISIBLE);
                     }
                     //判断已选

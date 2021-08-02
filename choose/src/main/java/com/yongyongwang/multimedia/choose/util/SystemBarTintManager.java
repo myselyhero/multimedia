@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -40,7 +39,6 @@ public class SystemBarTintManager {
         }
     }
 
-
     /**
      * The default system bar tint color value.
      */
@@ -55,72 +53,6 @@ public class SystemBarTintManager {
     private boolean mNavBarTintEnabled;
     private View mStatusBarTintView;
     private View mNavBarTintView;
-
-    /**
-     *  修改状态栏颜色，支持4.4以上版本
-     * @param activity
-     * @param colorId
-     */
-    public static void setStatusBarColor(Activity activity, int colorId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(activity.getResources().getColor(colorId));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
-            setTranslucentStatus(activity);
-            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(colorId);
-        }
-    }
-
-    /**
-     * 设置状态栏透明
-     */
-    @TargetApi(19)
-    public static void setTranslucentStatus(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
-            Window window = activity.getWindow();
-            View decorView = window.getDecorView();
-            //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            //导航栏颜色也可以正常设置
-            //window.setNavigationBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = activity.getWindow();
-            WindowManager.LayoutParams attributes = window.getAttributes();
-            int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-            attributes.flags |= flagTranslucentStatus;
-            //int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-            //attributes.flags |= flagTranslucentNavigation;
-            window.setAttributes(attributes);
-        }
-    }
-
-    /**
-     *  代码实现android:fitsSystemWindows
-     *
-     * @param activity
-     */
-    public static void setRootViewFitsSystemWindows(Activity activity, boolean fitSystemWindows) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ViewGroup winContent = (ViewGroup) activity.findViewById(android.R.id.content);
-            if (winContent.getChildCount() > 0) {
-                ViewGroup rootView = (ViewGroup) winContent.getChildAt(0);
-                if (rootView != null) {
-                    rootView.setFitsSystemWindows(fitSystemWindows);
-                }
-            }
-        }
-
-    }
 
     /**
      * Constructor. Call this in the host activity onCreate method after its

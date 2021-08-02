@@ -13,7 +13,7 @@
             android:id="@+id/multimedia_edit_back"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/multimedia_back"
+            android:src="@drawable/multimedia_back_white"
             android:scaleType="center"/>
 
         <ImageView

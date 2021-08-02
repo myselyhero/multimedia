@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         entity.setItemTips(getString(R.string.player));
         entity.setData(getItem(entity.getItemTips()));
         dataSource.add(entity);
+        entity = new ItemListEntity();
+        entity.setItemTips(getString(R.string.voice));
+        entity.setData(getItem(entity.getItemTips()));
+        dataSource.add(entity);
         listView.setDataSource(dataSource);
 
         String path = "/storage/emulated/0/Movies/QQ视频_370a64196c2cffb6ae876a77ebc5dbe51610300661.mp4";
@@ -73,10 +77,21 @@ public class MainActivity extends AppCompatActivity {
                             .isLoop(get(getString(R.string.player_loop)))//循环
                             .autoPlayer(get(getString(R.string.player_auto)))//自动播放
                             .startPlayer(path);
+                }else if (getType() == 3){
+                    MultimediaBuild.create(MainActivity.this)
+                            .isOnly(get(getString(R.string.photo_only)))//是否单选
+                            .darkTheme(get(getString(R.string.dark_theme)))
+                            .maxNum(getData(getString(R.string.photo_max_num),6))//最大可选数量
+                            .minDuration(getData(getString(R.string.photo_min_duration),5000))//过滤小于该值视频(5000)
+                            .maxDuration(getData(getString(R.string.photo_max_duration),60 * 1000))//过滤大于该值视频(60 * 1000)
+                            .startVoice(list -> {
+
+                            });
                 }else {
                     MultimediaBuild.create(MainActivity.this)
                             .setMultimediaType(get())//选择类型
                             .isOnly(get(getString(R.string.photo_only)))//是否单选
+                            .darkTheme(get(getString(R.string.dark_theme)))
                             .isOnlyPreview(get(getString(R.string.photo_only_preview)))//单选模式下预览页面是否需要已选列表展示
                             .isShade(get(getString(R.string.photo_shade)))//选中后是否需要阴影效果
                             .maxNum(getData(getString(R.string.photo_max_num),6))//最大可选数量
@@ -137,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
             return 1;
         else if (TextUtils.equals(entity.getItemTips(),getString(R.string.player)))
             return 2;
+        else if (TextUtils.equals(entity.getItemTips(),getString(R.string.voice)))
+            return 3;
         return 0;
     }
 
@@ -231,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             list.add(new ItemEntity(getString(R.string.photo_all),true));
             list.add(new ItemEntity(getString(R.string.photo_img)));
             list.add(new ItemEntity(getString(R.string.photo_video)));
+            list.add(new ItemEntity(getString(R.string.dark_theme)));
             list.add(new ItemEntity(getString(R.string.photo_only)));
             list.add(new ItemEntity(getString(R.string.photo_only_preview)));
             list.add(new ItemEntity(getString(R.string.photo_shade)));
@@ -251,10 +269,16 @@ public class MainActivity extends AppCompatActivity {
             list.add(new ItemEntity(getString(R.string.came_record),JCameraView.BUTTON_STATE_ONLY_RECORDER));
             list.add(new ItemEntity(getString(R.string.came_record_max_duration),60 * 1000));
             list.add(new ItemEntity(getString(R.string.came_record_min_duration),5000));
-        }else {
+        }else if (TextUtils.equals(arg,getString(R.string.player))){
             list.add(new ItemEntity(getString(R.string.player_auto)));
             list.add(new ItemEntity(getString(R.string.player_mute)));
             list.add(new ItemEntity(getString(R.string.player_loop)));
+        }else {
+            list.add(new ItemEntity(getString(R.string.dark_theme)));
+            list.add(new ItemEntity(getString(R.string.photo_only)));
+            list.add(new ItemEntity(getString(R.string.photo_max_num),9));
+            list.add(new ItemEntity(getString(R.string.photo_min_duration),5000));
+            list.add(new ItemEntity(getString(R.string.photo_max_duration),20000));
         }
         return list;
     }

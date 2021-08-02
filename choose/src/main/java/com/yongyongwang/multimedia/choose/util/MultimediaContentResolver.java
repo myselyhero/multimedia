@@ -14,8 +14,10 @@ import com.yongyongwang.multimedia.choose.MultimediaEnum;
 import com.yongyongwang.multimedia.choose.R;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
+import com.yongyongwang.multimedia.choose.entity.MultimediaVoiceEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentFolderListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentListener;
+import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -218,18 +220,17 @@ public final class MultimediaContentResolver {
                                 /**
                                  * 如果时长小于最小时长
                                  */
-                                if (mChooseConfig.getMaxDuration() > 0 && duration < mChooseConfig.getMinDuration()) {
+                                if (mChooseConfig.getMinDuration() > 0 && duration < mChooseConfig.getMinDuration()) {
                                     continue;
                                 }
 
                                 /**
-                                 * 如果时长大于最小时长
+                                 * 如果时长大于最大时长
                                  */
                                 if (mChooseConfig.getMaxDuration() > 0 && duration > mChooseConfig.getMaxDuration()) {
                                     continue;
                                 }
                             }else {
-                                //
                                 if (mChooseConfig.getMaxSize() > 0 && FileUtils.formFileSize(size) > mChooseConfig.getMaxSize()){
                                     continue;
                                 }
@@ -262,6 +263,60 @@ public final class MultimediaContentResolver {
                 }
             }
         }).start();
+    }
+
+    /**
+     *
+     * 获取音乐及录音文件
+     *
+     * @param resultListener
+     */
+    public void getMusic(MultimediaVoiceResultListener resultListener){
+
+        if (resultListener == null)
+            return;
+
+        List<MultimediaVoiceEntity> musicList = new ArrayList<>();
+        /**/
+        Cursor cursor = mContext.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+        /**/
+        if (cursor != null){
+            while (cursor.moveToNext()){
+                MultimediaVoiceEntity bean = new MultimediaVoiceEntity();
+                int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));
+                bean.setMusic(isMusic == 1);
+                bean.setName(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+                bean.setAuthor(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+                bean.setDuration(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
+                bean.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
+                bean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+
+                /**
+                 * 过滤调时长为0或大小为0的视频
+                 */
+                if (bean.getDuration() == 0 || bean.getSize() <= 0) {
+                    continue;
+                }
+
+                /**
+                 * 如果时长小于最小时长
+                 */
+                if (mChooseConfig.getMinDuration() > 0 && bean.getDuration() < mChooseConfig.getMinDuration()) {
+                    continue;
+                }
+
+                /**
+                 * 如果时长大于最大时长
+                 */
+                if (mChooseConfig.getMaxDuration() > 0 && bean.getDuration() > mChooseConfig.getMaxDuration()) {
+                    continue;
+                }
+
+                musicList.add(bean);
+            }
+            cursor.close();
+        }
+        resultListener.onListener(musicList);
     }
 
     /**

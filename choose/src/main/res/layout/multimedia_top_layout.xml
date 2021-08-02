@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/multimedia_common_height"
-    android:paddingRight="10dp"
-    android:background="@color/multimedia_theme">
+    android:paddingRight="10dp">
 
     <ImageView
         android:layout_centerVertical="true"
@@ -11,7 +10,7 @@
         android:layout_width="40dp"
         android:layout_height="match_parent"
         android:scaleType="center"
-        android:src="@drawable/multimedia_close"/>
+        android:src="@drawable/multimedia_close_black"/>
 
     <LinearLayout
         android:id="@+id/multimedia_top_layout_folder"
@@ -51,6 +50,7 @@
         android:gravity="center"
         android:background="@drawable/multimedia_common_button"
         android:text="@string/multimedia_choose_confirm"
-        android:textColor="#ffffff"
+        android:enabled="false"
+        android:textColor="#fff"
         android:textSize="14sp" />
 </RelativeLayout>

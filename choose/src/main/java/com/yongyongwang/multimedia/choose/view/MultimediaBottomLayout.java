@@ -47,10 +47,8 @@ public class MultimediaBottomLayout extends LinearLayout {
      */
     private void initView(){
         LayoutInflater.from(getContext()).inflate(R.layout.multimedia_bottom_layout,this);
-
         previewBackground = findViewById(R.id.multimedia_bottom_preview);
         previewTextView = findViewById(R.id.multimedia_bottom_preview_tv);
-
         editTextView = findViewById(R.id.multimedia_bottom_edit);
     }
 
@@ -73,6 +71,8 @@ public class MultimediaBottomLayout extends LinearLayout {
     public void setConfig(MultimediaConfig multimediaConfig){
         if (multimediaConfig == null)
             return;
+        setBackgroundColor(multimediaConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme) : getResources().getColor(R.color.multimedia_white_theme));
+        previewTextView.setTextColor(multimediaConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
         editTextView.setVisibility(multimediaConfig.isCrop() ? View.VISIBLE : View.GONE);
     }
 

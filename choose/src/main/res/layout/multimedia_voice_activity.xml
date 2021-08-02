@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/multimedia_voice_bg"
+    android:background="@color/multimedia_white_background">
+    <RelativeLayout
+        android:id="@+id/multimedia_voice_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/multimedia_common_height">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/multimedia_voice_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/multimedia_back_black"/>
+
+        <TextView
+            android:id="@+id/multimedia_voice_btn"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:minWidth="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:enabled="false"
+            android:background="@drawable/multimedia_common_button"
+            android:text="@string/multimedia_choose_confirm"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <com.yongyongwang.multimedia.choose.view.MultimediaVoiceView
+        android:layout_marginTop="5dp"
+        android:id="@+id/multimedia_voice_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

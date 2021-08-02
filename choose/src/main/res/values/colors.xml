@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="multimedia_white_theme">#ffffff</color>
+    <color name="multimedia_white_background">#F8F9FB</color>
+    <color name="multimedia_white_black">#303133</color>
+
     <color name="multimedia_theme">#363e41</color>
     <color name="multimedia_theme_background">#262b2e</color>
     <color name="multimedia_theme_bright">#2CA347</color>
+
+    <color name="white">#FFFFFFFF</color>
 </resources>

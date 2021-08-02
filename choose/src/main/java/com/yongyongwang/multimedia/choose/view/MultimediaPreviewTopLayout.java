@@ -80,6 +80,9 @@ public class MultimediaPreviewTopLayout extends LinearLayout implements View.OnC
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setConfig(MultimediaConfig mConfig) {
         this.mConfig = mConfig;
+        setBackgroundColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme) : getResources().getColor(R.color.multimedia_white_theme));
+        goBackBackground.setImageResource(mConfig.isDarkTheme() ? R.drawable.multimedia_back_white : R.drawable.multimedia_back_black);
+        positionTextView.setTextColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
         if (!TextUtils.isEmpty(mConfig.getConfirmText()))
             button.setText(mConfig.getConfirmText());
         if (mConfig.getConfirmDrawable() > 0)
