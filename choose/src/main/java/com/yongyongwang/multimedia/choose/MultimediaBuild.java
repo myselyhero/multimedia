@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
+import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.lang.ref.WeakReference;
@@ -200,6 +201,16 @@ public class MultimediaBuild {
     }
 
     /**
+     * 暗色主题
+     * @param dark
+     * @return
+     */
+    public MultimediaBuild darkTheme(boolean dark){
+        mChooseConfig.setDarkTheme(dark);
+        return this;
+    }
+
+    /**
      * 确认按钮
      * @param text
      * @return
@@ -354,6 +365,30 @@ public class MultimediaBuild {
      */
     public void start(int requestCode){
         Intent intent = new Intent(mActivity.get(), MultimediaActivity.class);
+        intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
+        mActivity.get().startActivityForResult(intent,requestCode);
+    }
+
+    /**
+     *
+     * @param listener
+     */
+    public void startVoice(MultimediaVoiceResultListener listener){
+        if (listener == null)
+            return;
+        MultimediaConfig.voiceResultListener = new WeakReference<>(listener).get();
+
+        Intent intent = new Intent(mActivity.get(), MultimediaVoiceActivity.class);
+        intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
+        mActivity.get().startActivity(intent);
+    }
+
+    /**
+     *
+     * @param requestCode
+     */
+    public void startVoice(int requestCode){
+        Intent intent = new Intent(mActivity.get(), MultimediaVoiceActivity.class);
         intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
         mActivity.get().startActivityForResult(intent,requestCode);
     }

@@ -141,13 +141,32 @@ public class MultimediaChooseView extends RecyclerView {
         return dataSource;
     }
 
-
     /**
      * 获取可选数量
      * @return
      */
     public int getUsableNum(){
         return dataSource == null ? maxNum : maxNum - dataSource.size();
+    }
+
+    public void setMaxNum(int maxNum) {
+        this.maxNum = maxNum;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
+
+    public void setRemove(boolean remove) {
+        isRemove = remove;
+    }
+
+    public void setAddIcon(int addIcon) {
+        this.addIcon = addIcon;
+    }
+
+    public void setRemoveIcon(int removeIcon) {
+        this.removeIcon = removeIcon;
     }
 
     /**

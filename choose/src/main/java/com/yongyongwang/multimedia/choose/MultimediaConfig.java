@@ -2,6 +2,7 @@ package com.yongyongwang.multimedia.choose;
 
 import android.view.View;
 
+import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.io.Serializable;
@@ -96,12 +97,12 @@ public class MultimediaConfig implements Serializable {
     private boolean gif;
 
     /**
-     * 最小时长
+     * 最小时长(适用于音频/视频)
      */
     private long minDuration = 3000;
 
     /**
-     * 最大时长
+     * 最大时长(适用于音频/视频)
      */
     private long maxDuration = 15000;
 
@@ -114,6 +115,11 @@ public class MultimediaConfig implements Serializable {
      * 所有产生的文件保存地址
      */
     private String dir;
+
+    /**
+     * 暗色主题
+     */
+    private boolean darkTheme;
 
     /**
      * 确认按钮
@@ -152,6 +158,7 @@ public class MultimediaConfig implements Serializable {
      *
      */
     public static MultimediaResultListener resultListener;
+    public static MultimediaVoiceResultListener voiceResultListener;
     public static MultimediaResultListener cameraListener;
 
     public static void setInstance(MultimediaConfig instance) {
@@ -286,6 +293,14 @@ public class MultimediaConfig implements Serializable {
         this.dir = dir;
     }
 
+    public boolean isDarkTheme() {
+        return darkTheme;
+    }
+
+    public void setDarkTheme(boolean darkTheme) {
+        this.darkTheme = darkTheme;
+    }
+
     public int getConfirmDrawable() {
         return confirmDrawable;
     }
@@ -393,6 +408,7 @@ public class MultimediaConfig implements Serializable {
                 ", maxDuration=" + maxDuration +
                 ", spanCount=" + spanCount +
                 ", dir='" + dir + '\'' +
+                ", darkTheme=" + darkTheme +
                 ", confirmDrawable=" + confirmDrawable +
                 ", confirmTextColor=" + confirmTextColor +
                 ", confirmText='" + confirmText + '\'' +

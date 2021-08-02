@@ -77,13 +77,10 @@ public class MultimediaTopLayout extends LinearLayout implements View.OnClickLis
     private void initView(){
         mActivity = (Activity) getContext();
         LayoutInflater.from(getContext()).inflate(R.layout.multimedia_top_layout,this);
-
         backImageView = findViewById(R.id.multimedia_top_layout_close);
-
         folderBackground = findViewById(R.id.multimedia_top_layout_folder);
         folderTextView = findViewById(R.id.multimedia_top_layout_folder_tv);
         folderImageView = findViewById(R.id.multimedia_top_layout_folder_iv);
-
         button = findViewById(R.id.multimedia_top_layout_button);
 
         rotationAnimator = ObjectAnimator.ofFloat(folderImageView,"rotation",0,180f);
@@ -113,6 +110,8 @@ public class MultimediaTopLayout extends LinearLayout implements View.OnClickLis
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setConfig(MultimediaConfig mConfig) {
         this.mConfig = mConfig;
+        backImageView.setImageResource(mConfig.isDarkTheme() ? R.drawable.multimedia_close : R.drawable.multimedia_close_black);
+        setBackgroundColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme) : getResources().getColor(R.color.multimedia_white_theme));
         if (!TextUtils.isEmpty(mConfig.getConfirmText()))
             button.setText(mConfig.getConfirmText());
         if (mConfig.getConfirmDrawable() > 0)
@@ -131,7 +130,7 @@ public class MultimediaTopLayout extends LinearLayout implements View.OnClickLis
         MultimediaFolderEntity entity = data.get(0);
         folderTextView.setText(entity.getFolder());
 
-        folderWindow = new MultimediaFolderWindow(getContext(),data,new MultimediaFolderWindow.OnMultimediaFolderWindowListener(){
+        folderWindow = new MultimediaFolderWindow(getContext(),data,mConfig.isDarkTheme(),new MultimediaFolderWindow.OnMultimediaFolderWindowListener(){
             @Override
             public void onDismiss() {
                 folderImageView.clearAnimation();

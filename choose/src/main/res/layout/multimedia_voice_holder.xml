@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+    <ImageView
+        android:id="@+id/multimedia_voice_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/multimedia_voice_v"/>
+
+    <LinearLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/multimedia_voice_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="再度重相逢 - 伍佰"/>
+
+        <TextView
+            android:id="@+id/multimedia_voice_info"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            android:text="12秒 12M"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/multimedia_voice_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/multimedia_choose_un"/>
+</LinearLayout>

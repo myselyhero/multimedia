@@ -86,12 +86,10 @@ public class TransitionView extends LinearLayout {
                         .alpha(1f)
                         .setDuration(1000)
                         .setListener(null);
-                animationView.pauseAnimation();
 
                 textView.setText(loadText);
                 if (loadTextColor != -1){
-
-                    textView.setTextColor(loadTextColor);
+                    textView.setTextColor(getResources().getColor(loadTextColor));
                 }
 
                 if (!TextUtils.isEmpty(defaultLoadingFile)){
@@ -105,11 +103,10 @@ public class TransitionView extends LinearLayout {
                         .alpha(1f)
                         .setDuration(1000)
                         .setListener(null);
-                animationView.pauseAnimation();
 
                 textView.setText(emptyText);
                 if (emptyTextColor != -1){
-                    textView.setTextColor(emptyTextColor);
+                    textView.setTextColor(getResources().getColor(emptyTextColor));
                 }
                 if (!TextUtils.isEmpty(defaultEmptyFile)){
                     animationView.setAnimation(defaultEmptyFile);

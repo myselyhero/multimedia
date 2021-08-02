@@ -26,6 +26,8 @@ public class MultimediaPreviewBottomLayout extends LinearLayout {
     private LinearLayout boxBackground;
     private ImageView boxImageView;
     private TextView textView;
+    private TextView chooseTextView;
+    private MultimediaConfig mConfig;
 
     public MultimediaPreviewBottomLayout(Context context) {
         super(context);
@@ -50,6 +52,7 @@ public class MultimediaPreviewBottomLayout extends LinearLayout {
         boxBackground = findViewById(R.id.multimedia_preview_bottom_box);
         boxImageView = findViewById(R.id.multimedia_preview_bottom_iv);
         textView = findViewById(R.id.multimedia_bottom_preview_edit);
+        chooseTextView = findViewById(R.id.multimedia_preview_bottom_tv);
     }
 
     /**
@@ -58,8 +61,13 @@ public class MultimediaPreviewBottomLayout extends LinearLayout {
      */
     public void setConfig(MultimediaConfig multimediaConfig){
         if (multimediaConfig == null)
-            return;
-        textView.setVisibility(multimediaConfig.isCrop() ? View.VISIBLE : View.GONE);
+            mConfig = MultimediaConfig.getInstance();
+        else
+            mConfig = multimediaConfig;
+        setBackgroundColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme) : getResources().getColor(R.color.multimedia_white_theme));
+        textView.setTextColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
+        chooseTextView.setTextColor(mConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
+        textView.setVisibility(mConfig.isCrop() ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -71,7 +79,7 @@ public class MultimediaPreviewBottomLayout extends LinearLayout {
         if (check){
             boxImageView.setImageResource(R.drawable.multimedia_choose_sel);
         }else {
-            boxImageView.setImageResource(R.drawable.multimedia_choose_un);
+            boxImageView.setImageResource(mConfig.isDarkTheme() ? R.drawable.multimedia_choose_un : R.drawable.multimedia_choose_un_black);
         }
     }
 

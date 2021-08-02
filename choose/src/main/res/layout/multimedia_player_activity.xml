@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/multimedia_theme_background">
+    android:background="@color/multimedia_white_background">
     <LinearLayout
-        android:background="@color/multimedia_theme"
+        android:background="@color/multimedia_white_theme"
         android:layout_width="match_parent"
         android:layout_height="@dimen/multimedia_common_height">
         <ImageView
@@ -13,7 +13,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="@drawable/multimedia_back"/>
+            android:src="@drawable/multimedia_back_white"/>
     </LinearLayout>
     <com.yongyongwang.multimedia.choose.player.LwjPlayerView
         android:id="@+id/multimedia_player_lwj"
