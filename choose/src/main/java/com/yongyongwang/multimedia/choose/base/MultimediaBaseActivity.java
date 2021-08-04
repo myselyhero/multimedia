@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +73,6 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
         if (mChooseConfig == null)
             mChooseConfig = MultimediaConfig.getInstance();
 
-        /** 设置状态栏颜色 */
         if (mChooseConfig.isDarkTheme()){
             StatusBarUtil.setStatusBarColor(this,R.color.multimedia_theme);
         }else {
@@ -164,7 +164,14 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
          */
         if (entity.isChoose()){
             entity.setChoose(false);
-            mChooseDataSource.remove(entity);
+            for (int i = 0; i < mChooseDataSource.size(); i++) {
+                MultimediaEntity e = mChooseDataSource.get(i);
+                if (TextUtils.equals(e.getPath(),entity.getPath())){
+                    mChooseDataSource.remove(i);
+                    break;
+                }
+            }
+            //mChooseDataSource.remove(entity);
         }else {
             /**
              * 未选择

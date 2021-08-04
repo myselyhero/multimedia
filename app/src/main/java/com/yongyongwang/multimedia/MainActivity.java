@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             .setMultimediaType(get())//选择类型
                             .isOnly(get(getString(R.string.photo_only)))//是否单选
                             .darkTheme(get(getString(R.string.dark_theme)))
+                            .chooseData(chooseView.getDataSource())
                             .isOnlyPreview(get(getString(R.string.photo_only_preview)))//单选模式下预览页面是否需要已选列表展示
                             .isShade(get(getString(R.string.photo_shade)))//选中后是否需要阴影效果
                             .maxNum(getData(getString(R.string.photo_max_num),6))//最大可选数量
