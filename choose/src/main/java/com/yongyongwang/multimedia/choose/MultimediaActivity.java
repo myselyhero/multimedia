@@ -3,6 +3,7 @@ package com.yongyongwang.multimedia.choose;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -48,6 +49,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
     protected void onResume() {
         super.onResume();
         //预览页面数据改变后在这里刷新一下
+        onUpdatePreview(mChooseDataSource.size());
         if (mRecyclerView != null)
             mRecyclerView.update();
     }
@@ -64,6 +66,12 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         mBottomLayout = findViewById(R.id.multimedia_bottom);
         mRecyclerView = findViewById(R.id.multimedia_item);
         transitionView = findViewById(R.id.multimedia_transition);
+
+        //设置已选
+        if (mChooseConfig.getChooseList() != null && mChooseConfig.getChooseList().size() > 0){
+            mChooseDataSource.addAll(mChooseConfig.getChooseList());
+            onUpdatePreview(mChooseDataSource.size());
+        }
 
         mRecyclerView.setCamera(mChooseConfig.isCamera());
         mRecyclerView.setShade(mChooseConfig.isShade());

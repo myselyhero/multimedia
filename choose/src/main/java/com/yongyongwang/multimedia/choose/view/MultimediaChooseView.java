@@ -129,8 +129,37 @@ public class MultimediaChooseView extends RecyclerView {
     public void setDataSource(@NonNull List<MultimediaEntity> data){
         if (data == null)
             return;
+        if (dataSource.size() > 0)
+            dataSource.clear();
         dataSource.addAll(data);
-        mAdapter.notifyDataSetChanged();
+        notifyData();
+    }
+
+    /**
+     *
+     */
+    public void clear(){
+        if (dataSource == null || dataSource.size() == 0)
+            return;
+        dataSource.clear();
+        notifyData();
+    }
+
+    /**
+     *
+     */
+    public void notifyData(){
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     *
+     * @param position
+     */
+    public void notifyData(int position){
+        if (mAdapter != null)
+            mAdapter.notifyItemChanged(position);
     }
 
     /**

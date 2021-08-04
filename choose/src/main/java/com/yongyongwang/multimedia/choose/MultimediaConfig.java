@@ -2,10 +2,12 @@ package com.yongyongwang.multimedia.choose;
 
 import android.view.View;
 
+import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author myselyhero 
@@ -90,6 +92,11 @@ public class MultimediaConfig implements Serializable {
      * 是否可拍照
      */
     private boolean camera;
+
+    /**
+     *
+     */
+    private List<MultimediaEntity> chooseList;
 
     /**
      * 是否显示gif
@@ -253,6 +260,14 @@ public class MultimediaConfig implements Serializable {
         this.camera = camera;
     }
 
+    public List<MultimediaEntity> getChooseList() {
+        return chooseList;
+    }
+
+    public void setChooseList(List<MultimediaEntity> chooseList) {
+        this.chooseList = chooseList;
+    }
+
     public boolean isGif() {
         return gif;
     }
@@ -403,6 +418,7 @@ public class MultimediaConfig implements Serializable {
                 ", compress=" + compress +
                 ", mixture=" + mixture +
                 ", camera=" + camera +
+                ", chooseList=" + chooseList +
                 ", gif=" + gif +
                 ", minDuration=" + minDuration +
                 ", maxDuration=" + maxDuration +

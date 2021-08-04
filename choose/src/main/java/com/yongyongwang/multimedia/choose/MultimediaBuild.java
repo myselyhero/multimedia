@@ -9,10 +9,12 @@ import android.view.View;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
+import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 /**
  * @author yongyong
@@ -157,6 +159,16 @@ public class MultimediaBuild {
      */
     public MultimediaBuild isCamera(boolean camera){
         mChooseConfig.setCamera(camera);
+        return this;
+    }
+
+    /**
+     * 设置已选列表
+     * @param list
+     * @return
+     */
+    public MultimediaBuild chooseData(List<MultimediaEntity> list){
+        mChooseConfig.setChooseList(list);
         return this;
     }
 
