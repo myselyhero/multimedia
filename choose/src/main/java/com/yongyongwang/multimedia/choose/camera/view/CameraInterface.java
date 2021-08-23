@@ -27,6 +27,7 @@ import com.yongyongwang.multimedia.choose.camera.listener.ErrorListener;
 import com.yongyongwang.multimedia.choose.camera.util.AngleUtil;
 import com.yongyongwang.multimedia.choose.camera.util.CameraParamUtil;
 import com.yongyongwang.multimedia.choose.camera.util.CheckPermission;
+import com.yongyongwang.multimedia.choose.crop.util.ImageEditUtils;
 import com.yongyongwang.multimedia.choose.util.DeviceUtil;
 import com.yongyongwang.multimedia.choose.util.FileUtils;
 import com.yongyongwang.multimedia.choose.util.ScreenUtils;
@@ -706,21 +707,11 @@ public class CameraInterface implements Camera.PreviewCallback {
         int areaSize = Float.valueOf(focusAreaSize * coefficient).intValue();
         int centerX = (int) (x / ScreenUtils.getScreenWidth(context) * 2000 - 1000);
         int centerY = (int) (y / ScreenUtils.getScreenHeight(context) * 2000 - 1000);
-        int left = clamp(centerX - areaSize / 2, -1000, 1000);
-        int top = clamp(centerY - areaSize / 2, -1000, 1000);
+        float left = ImageEditUtils.clamp(centerX - areaSize / 2, -1000, 1000);
+        float top = ImageEditUtils.clamp(centerY - areaSize / 2, -1000, 1000);
         RectF rectF = new RectF(left, top, left + areaSize, top + areaSize);
         return new Rect(Math.round(rectF.left), Math.round(rectF.top), Math.round(rectF.right), Math.round(rectF
                 .bottom));
-    }
-
-    private static int clamp(int x, int min, int max) {
-        if (x > max) {
-            return max;
-        }
-        if (x < min) {
-            return min;
-        }
-        return x;
     }
 
     void setErrorLinsenter(ErrorListener errorLisenter) {

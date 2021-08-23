@@ -271,8 +271,6 @@ public class MultimediaChooseView extends RecyclerView {
                 String path = entity.getPath();
                 if (!TextUtils.isEmpty(entity.getCompressPath())){
                     path = entity.getCompressPath();
-                }else if (!TextUtils.isEmpty(entity.getCropPath())){
-                    path = entity.getCropPath();
                 }
                 holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 GlideEngine.loader(getContext(),path,holder.imageView);

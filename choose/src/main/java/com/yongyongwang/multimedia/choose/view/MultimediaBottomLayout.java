@@ -74,6 +74,8 @@ public class MultimediaBottomLayout extends LinearLayout {
         setBackgroundColor(multimediaConfig.isDarkTheme() ? getResources().getColor(R.color.multimedia_theme) : getResources().getColor(R.color.multimedia_white_theme));
         previewTextView.setTextColor(multimediaConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
         editTextView.setVisibility(multimediaConfig.isCrop() ? View.VISIBLE : View.GONE);
+        if (multimediaConfig.isCrop())
+            editTextView.setTextColor(multimediaConfig.isDarkTheme() ? getResources().getColor(R.color.white) : getResources().getColor(R.color.multimedia_white_black));
     }
 
     /**

@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
-import com.yongyongwang.multimedia.choose.edit.MultimediaEditActivity;
+import com.yongyongwang.multimedia.choose.crop.MultimediaCropActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.model.MultimediaContentFolderListener;
@@ -45,6 +45,8 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
 
     private MultimediaContentResolver contentResolver;
 
+    private boolean icCrop;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -71,6 +73,9 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         if (mChooseConfig.getChooseList() != null && mChooseConfig.getChooseList().size() > 0){
             mChooseDataSource.addAll(mChooseConfig.getChooseList());
             onUpdatePreview(mChooseDataSource.size());
+            for (MultimediaEntity e : mChooseDataSource) {
+                isNotifyFolder(e);
+            }
         }
 
         mRecyclerView.setCamera(mChooseConfig.isCamera());
@@ -106,12 +111,7 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         mTopLayout.setLayoutListener(new MultimediaTopLayout.OnMultimediaTopLayoutListener() {
             @Override
             public void onConfirm() {
-                if (mChooseConfig.isCompress()){
-                    compress();
-                }else {
-                    complete();
-                    finish();
-                }
+                onFinish();
             }
 
             @Override
@@ -132,9 +132,10 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
             MultimediaEntity entity = mChooseDataSource.get(mChooseDataSource.size()-1);
             if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
                 return;
-            Intent intent = new Intent(this, MultimediaEditActivity.class);
-            intent.putExtra(REQUEST_DATA,entity);
-            startActivity(intent);
+            icCrop = false;
+            Intent intent = new Intent(this, MultimediaCropActivity.class);
+            intent.putExtra(REQUEST_DATA,entity.getPath());
+            startActivityForResult(intent,PERMISSION_REQUEST_CROP);
         });
         mBottomLayout.addPreviewClickListener(v -> {
             if (mChooseDataSource.size() == 0)
@@ -200,15 +201,35 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
             switch (requestCode){
-                case COMMON_CODE:
-                    if (mChooseConfig.isCompress()){
-                        compress();
-                    }else {
-                        complete();
-                        finish();
+                case PERMISSION_REQUEST_CROP:
+                    if (data == null)
+                        return;
+                    MultimediaEntity cropEntity = (MultimediaEntity) data.getSerializableExtra(RESULT_DATA);
+                    if (cropEntity == null)
+                        return;
+                    for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
+                        if (folderEntity.isChecked() || folderEntity.getBucketId() == -1){
+                            folderEntity.add(0,cropEntity);
+                        }
+                    }
+                    chooseItem(cropEntity);
+                    mRecyclerView.update();
+
+                    if (icCrop){
+                        if (mChooseConfig.isCompress()){
+                            compress();
+                        }else {
+                            complete();
+                            finish();
+                        }
                     }
                     break;
+                case COMMON_CODE:
+                    onFinish();
+                    break;
                 case COMMON_CAMERA_CODE:
+                    if (data == null)
+                        return;
                     MultimediaEntity entity = (MultimediaEntity) data.getSerializableExtra(RESULT_DATA);
                     if (entity == null)
                         return;
@@ -223,6 +244,26 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                     }
                     break;
             }
+        }
+    }
+
+    /**
+     *
+     */
+    private void onFinish(){
+        if (mChooseConfig.isCrop()){
+            icCrop = true;
+            MultimediaEntity e = mChooseDataSource.get(0);
+            Intent intent = new Intent(this, MultimediaCropActivity.class);
+            intent.putExtra(REQUEST_DATA,e.getPath());
+            startActivityForResult(intent,PERMISSION_REQUEST_CROP);
+            return;
+        }
+        if (mChooseConfig.isCompress()){
+            compress();
+        }else {
+            complete();
+            finish();
         }
     }
 

@@ -9,7 +9,9 @@ import android.view.View;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
 import com.yongyongwang.multimedia.choose.camera.MultimediaCameraActivity;
+import com.yongyongwang.multimedia.choose.crop.MultimediaCropActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
+import com.yongyongwang.multimedia.choose.model.MultimediaCropResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
@@ -440,5 +442,20 @@ public class MultimediaBuild {
         Intent intent = new Intent(mActivity.get(), MultimediaCameraActivity.class);
         intent.putExtra(MultimediaBaseActivity.MULTIMEDIA_CONFIG,mChooseConfig);
         mActivity.get().startActivityForResult(intent,requestCode);
+    }
+
+    /**
+     *
+     * @param path
+     * @param listener
+     */
+    public void startCrop(String path,MultimediaCropResultListener listener){
+        if (listener == null)
+            return;
+        MultimediaConfig.cropResultListener = new WeakReference<>(listener).get();
+
+        Intent intent = new Intent(mActivity.get(), MultimediaCropActivity.class);
+        intent.putExtra(MultimediaBaseActivity.REQUEST_DATA,path);
+        mActivity.get().startActivity(intent);
     }
 }

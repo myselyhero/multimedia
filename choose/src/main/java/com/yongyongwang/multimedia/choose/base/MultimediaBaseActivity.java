@@ -42,6 +42,7 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
 
     public static final int PERMISSION_REQUEST_CODE = 10;
     public static final int PERMISSION_REQUEST_CAMERA = 11;
+    public static final int PERMISSION_REQUEST_CROP = 12;
 
     /**
      * 配置参数
@@ -140,7 +141,7 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
      *
      * @param entity
      */
-    private void isNotifyFolder(MultimediaEntity entity){
+    protected void isNotifyFolder(MultimediaEntity entity){
         for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
             if (folderEntity.getData() != null && folderEntity.getData().size() != 0){
                 for (MultimediaEntity e : folderEntity.getData()) {
@@ -171,7 +172,6 @@ public abstract class MultimediaBaseActivity extends AppCompatActivity {
                     break;
                 }
             }
-            //mChooseDataSource.remove(entity);
         }else {
             /**
              * 未选择
