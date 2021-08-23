@@ -3,6 +3,7 @@ package com.yongyongwang.multimedia.choose;
 import android.view.View;
 
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
+import com.yongyongwang.multimedia.choose.model.MultimediaCropResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaVoiceResultListener;
 import com.yongyongwang.multimedia.choose.model.MultimediaResultListener;
 
@@ -167,6 +168,7 @@ public class MultimediaConfig implements Serializable {
     public static MultimediaResultListener resultListener;
     public static MultimediaVoiceResultListener voiceResultListener;
     public static MultimediaResultListener cameraListener;
+    public static MultimediaCropResultListener cropResultListener;
 
     public static void setInstance(MultimediaConfig instance) {
         MultimediaConfig.instance = instance;

@@ -6,7 +6,7 @@
 
     <color name="multimedia_theme">#363e41</color>
     <color name="multimedia_theme_background">#262b2e</color>
-    <color name="multimedia_theme_bright">#2CA347</color>
+    <color name="multimedia_theme_bright">#1890FF</color>
 
     <color name="white">#FFFFFFFF</color>
 </resources>

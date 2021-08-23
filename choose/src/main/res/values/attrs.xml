@@ -26,4 +26,11 @@
         <attr name="duration_max" format="integer"/>
         <attr name="duration_min" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="CropItemView">
+        <attr name="cropModel" format="enum">
+            <enum name="crop" value="0"/>
+            <enum name="abjust" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>

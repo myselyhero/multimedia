@@ -4,6 +4,7 @@
     android:layout_height="@dimen/multimedia_common_height">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/multimedia_bottom_preview_edit"
         android:layout_width="60dp"
         android:layout_height="match_parent"

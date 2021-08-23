@@ -10,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.yongyongwang.multimedia.choose.base.MultimediaBaseActivity;
-import com.yongyongwang.multimedia.choose.edit.MultimediaEditActivity;
+import com.yongyongwang.multimedia.choose.crop.MultimediaCropActivity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaFolderEntity;
 import com.yongyongwang.multimedia.choose.entity.MultimediaPreviewEntity;
@@ -101,50 +102,15 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
             MultimediaEntity entity = getEntity(viewPager.getCurrentItem());
             if (entity == null || FileUtils.isGif(entity.getPath()) || FileUtils.isVideo(entity.getMimeType()))
                 return;
-            Intent intent = new Intent(this, MultimediaEditActivity.class);
-            intent.putExtra(REQUEST_DATA,entity);
-            startActivity(intent);
+            Intent intent = new Intent(this, MultimediaCropActivity.class);
+            intent.putExtra(REQUEST_DATA,entity.getPath());
+            startActivityForResult(intent,PERMISSION_REQUEST_CROP);
         });
         mBottomLayout.addCheckListener(v -> {
             MultimediaEntity entity = getEntity(viewPager.getCurrentItem());
             if (entity == null)
                 return;
-            boolean flag = previewChooseItem(entity,isAll);
-            mBottomLayout.setChecked(flag);
-
-            if (mChooseConfig.isOnly() && !mChooseConfig.isOnlyPreview())
-                return;
-
-            /**
-             * 为true表示添加成功、添加到底部列表
-             */
-            if (flag){
-
-                if (mChooseConfig.isOnly()){
-                    mRecyclerView.clear();
-                }
-
-                if (!mRecyclerView.isExist(entity.getPath())){
-                    MultimediaPreviewEntity previewEntity = new MultimediaPreviewEntity();
-                    previewEntity.setPath(entity.getPath());
-                    previewEntity.setPosition(viewPager.getCurrentItem());
-                    previewEntity.setChoose(entity.isChoose());
-                    mRecyclerView.addDataSource(previewEntity);
-                }
-            }else {
-
-                /**
-                 * 不删除、但是要置于未选中
-                 */
-                if (!isAll){
-                    mRecyclerView.clearCurrentPosition();
-                }else {
-                    /**
-                     * 为false表示删除
-                     */
-                    mRecyclerView.remove(entity.getPath());
-                }
-            }
+            choose(entity);
         });
         mRecyclerView.setClickListener(entity -> {
             viewPager.setCurrentItem(entity.getPosition());
@@ -194,6 +160,50 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
     }
 
     /**
+     *
+     * @param entity
+     */
+    private void choose(MultimediaEntity entity){
+
+        boolean flag = previewChooseItem(entity,isAll);
+        mBottomLayout.setChecked(flag);
+
+        if (mChooseConfig.isOnly() && !mChooseConfig.isOnlyPreview())
+            return;
+
+        /**
+         * 为true表示添加成功、添加到底部列表
+         */
+        if (flag){
+
+            if (mChooseConfig.isOnly()){
+                mRecyclerView.clear();
+            }
+
+            if (!mRecyclerView.isExist(entity.getPath())){
+                MultimediaPreviewEntity previewEntity = new MultimediaPreviewEntity();
+                previewEntity.setPath(entity.getPath());
+                previewEntity.setPosition(viewPager.getCurrentItem());
+                previewEntity.setChoose(entity.isChoose());
+                mRecyclerView.addDataSource(previewEntity);
+            }
+        }else {
+
+            /**
+             * 不删除、但是要置于未选中
+             */
+            if (!isAll){
+                mRecyclerView.clearCurrentPosition();
+            }else {
+                /**
+                 * 为false表示删除
+                 */
+                mRecyclerView.remove(entity.getPath());
+            }
+        }
+    }
+
+    /**
      * ViewPager执行PageSelected
      * @param position
      */
@@ -235,6 +245,24 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
         }
 
         return position;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PERMISSION_REQUEST_CROP && RESULT_OK == resultCode && data != null){
+            MultimediaEntity cropEntity = (MultimediaEntity) data.getSerializableExtra(RESULT_DATA);
+            if (cropEntity == null)
+                return;
+
+            /*for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
+                if (folderEntity.isChecked() || folderEntity.getBucketId() == -1){
+                    folderEntity.add(0,cropEntity);
+                }
+            }
+
+            choose(cropEntity);*/
+        }
     }
 
     /**
@@ -323,7 +351,8 @@ public class MultimediaPreviewActivity extends MultimediaBaseActivity implements
                     photoView.setOnSingleFlingListener((e1, e2, velocityX, velocityY) -> {
                         return true;
                     });
-                    GlideEngine.loader(MultimediaPreviewActivity.this,mediaEntity.getPath(),photoView);
+                    String str = mediaEntity.getPath();
+                    GlideEngine.loader(MultimediaPreviewActivity.this,str,photoView);
                     return photoView;
                 }
             }

@@ -33,29 +33,9 @@
     <string name="multimedia_camera_video_tips">长按摄像</string>
     <string name="multimedia_camera_short">录制时间过短</string>
 
-    <string name="multimedia_edit_crop">剪裁</string>
-    <string name="multimedia_edit_filter">滤镜</string>
-    <string name="multimedia_edit_beauty">美颜</string>
-    <string name="multimedia_edit_abjust">调节</string>
-
-    <string name="multimedia_ration_1">1:1</string>
-    <string name="multimedia_ration_4">4:3</string>
-    <string name="multimedia_ration_16">16:9</string>
-    <string name="multimedia_ration_9">9:16</string>
-    
-    <string name="multimedia_beautify_buffing">磨皮</string>
-    <string name="multimedia_beautify_whitening">美白</string>
-
-    <string name="multimedia_adjust_contrast">对比度</string>
-    <string name="multimedia_adjust_saturation">饱和度</string>
-    <string name="multimedia_adjust_sharpness">锐度</string>
-    <string name="multimedia_adjust_bright">亮度</string>
-    <string name="multimedia_adjust_hue">色调</string>
-
-    <string name="multimedia_beautify_0">0</string>
-    <string name="multimedia_beautify_1">1</string>
-    <string name="multimedia_beautify_2">2</string>
-    <string name="multimedia_beautify_3">3</string>
-    <string name="multimedia_beautify_4">4</string>
-    <string name="multimedia_beautify_5">5</string>
+    <string name="crop_edit">裁剪</string>
+    <string name="crop_abjust">美化</string>
+    <string name="crop_abjust_brightness">亮度</string>
+    <string name="crop_abjust_contrast">对比度</string>
+    <string name="crop_abjust_saturation">饱和度</string>
 </resources>

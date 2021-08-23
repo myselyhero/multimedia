@@ -3,6 +3,7 @@ package com.yongyongwang.multimedia.choose.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,6 +104,21 @@ public class MultimediaRecyclerView extends RecyclerView {
     public void setDataSource(@NonNull List<MultimediaEntity> data) {
         dataSource = data;
         mAdapter.notifyDataSetChanged();
+    }
+
+    public List<MultimediaEntity> getDataSource() {
+        return dataSource;
+    }
+
+    /**
+     *
+     * @param entity
+     */
+    public void addItem(MultimediaEntity entity){
+        if (dataSource == null)
+            return;
+        dataSource.add(entity);
+        update();
     }
 
     /**
