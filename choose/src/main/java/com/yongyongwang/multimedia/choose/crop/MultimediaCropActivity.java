@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,6 +26,8 @@ import com.yongyongwang.multimedia.choose.util.ToastUtil;
  * @// TODO: 2021/8/17
  */
 public class MultimediaCropActivity extends MultimediaBaseActivity implements View.OnClickListener {
+
+    private static final String TAG = "MultimediaCropActivity";
 
     private ImageView backImageView;
     private ImageView saveImageView;

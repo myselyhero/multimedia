@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -165,13 +166,14 @@ public final class MultimediaContentResolver {
                         List<MultimediaEntity> result = new ArrayList<>();
                         data.moveToFirst();
                         do {
-                            long id = data.getLong
-                                    (data.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID));
-
+                            //long id = data.getLong(data.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID));
                             String absolutePath = data.getString
                                     (data.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA));
 
-                            String url = isAndroidQ ? getPathByAndroid_Q(id) : absolutePath;
+                            if (FileUtils.isContent(absolutePath))
+                                absolutePath = FileUtils.getPath(mContext,Uri.parse(absolutePath));
+
+                            //String url = isAndroidQ ? getPathByAndroid_Q(id) : absolutePath;
 
                             String mimeType = data.getString
                                     (data.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MIME_TYPE));
@@ -180,11 +182,7 @@ public final class MultimediaContentResolver {
                             // Here, it is solved that some models obtain mimeType and return the format of image / *,
                             // which makes it impossible to distinguish the specific type, such as mi 8,9,10 and other models
                             if (mimeType.endsWith("image/*")) {
-                                if (FileUtils.isContent(url)) {
-                                    mimeType = FileUtils.getMimeType(absolutePath);
-                                } else {
-                                    mimeType = FileUtils.getMimeType(url);
-                                }
+                                mimeType = FileUtils.getMimeType(absolutePath);
                                 if (!mChooseConfig.isGif()) {
                                     boolean isGif = FileUtils.isGif(mimeType);
                                     if (isGif) {
@@ -237,7 +235,7 @@ public final class MultimediaContentResolver {
                             }
 
                             MultimediaEntity entity = new MultimediaEntity();
-                            entity.setPath(url);
+                            entity.setPath(absolutePath);
                             entity.setName(fileName);
                             entity.setDuration(duration);
                             entity.setHeight(height);

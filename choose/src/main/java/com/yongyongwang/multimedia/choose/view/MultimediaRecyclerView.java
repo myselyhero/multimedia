@@ -215,6 +215,7 @@ public class MultimediaRecyclerView extends RecyclerView {
                 int pos = isCamera ? position -1 : position;
 
                 MultimediaEntity mediaEntity = dataSource.get(pos);
+
                 holder.shadeBackground.setVisibility(isShade && mediaEntity.isChoose() ? View.VISIBLE : View.GONE);
                 holder.chooseImageView.setImageResource(mediaEntity.isChoose() ? R.drawable.multimedia_choose_sel : R.drawable.multimedia_choose_un);
                 if (FileUtils.isVideo(mediaEntity.getMimeType())){
