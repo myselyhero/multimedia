@@ -73,8 +73,12 @@ public class MultimediaCropActivity extends MultimediaBaseActivity implements Vi
         }else if (v.getId() == R.id.multimedia_crop_save){
             if (mPath == null)
                 return;
+
             if (cropView.isCrop()){
                 cropView.crop();
+            }else {
+                ToastUtil.showShort(this,"未作任何更改！");
+                return;
             }
             new Handler().postDelayed(new Runnable() {
                 @Override

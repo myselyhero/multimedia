@@ -251,19 +251,31 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
      *
      */
     private void onFinish(){
-        if (mChooseConfig.isCrop()){
+        if (mChooseDataSource.size() == 0)
+            return;
+        //循环去掉前几个gif或视频
+        int p = 0;
+        MultimediaEntity e = mChooseDataSource.get(p);
+        while (p < mChooseDataSource.size() -1 ){
+            if (FileUtils.isGif(e.getPath()) || FileUtils.isVideo(e.getMimeType())){
+                p++;
+                e = mChooseDataSource.get(p);
+            }else {
+                break;
+            }
+        }
+        if (mChooseConfig.isCrop() && !FileUtils.isGif(e.getPath()) && !FileUtils.isVideo(e.getMimeType())){
             icCrop = true;
-            MultimediaEntity e = mChooseDataSource.get(0);
             Intent intent = new Intent(this, MultimediaCropActivity.class);
             intent.putExtra(REQUEST_DATA,e.getPath());
             startActivityForResult(intent,PERMISSION_REQUEST_CROP);
-            return;
-        }
-        if (mChooseConfig.isCompress()){
-            compress();
         }else {
-            complete();
-            finish();
+            if (mChooseConfig.isCompress()){
+                compress();
+            }else {
+                complete();
+                finish();
+            }
         }
     }
 
