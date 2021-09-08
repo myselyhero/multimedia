@@ -373,7 +373,11 @@ public class CropView extends FrameLayout implements Observer, View.OnClickListe
      * @return
      */
     public boolean isCrop(){
-        return editView != null && cropPicker != null && cropPicker.getVisibility() == VISIBLE;
+        if (cropPicker.getVisibility() != VISIBLE)
+            return false;
+        Rect contentRect = backgroundLayer.getContentRect();
+        Rect cropRect = editView.getEditRect();
+        return cropRect.width() < contentRect.width() || cropRect.height() < contentRect.height();
     }
 
     /**
@@ -390,10 +394,6 @@ public class CropView extends FrameLayout implements Observer, View.OnClickListe
      */
     public void crop(){
         if (imageEditorProxy == null)
-            return;
-        Rect contentRect = backgroundLayer.getContentRect();
-        Rect cropRect = editView.getEditRect();
-        if (cropRect.width() > contentRect.width() && cropRect.height() > contentRect.height())
             return;
         try {
             IEditAction cropAction = EditActionFactory.createAction("CropImage");
