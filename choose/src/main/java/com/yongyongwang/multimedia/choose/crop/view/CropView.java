@@ -3,6 +3,7 @@ package com.yongyongwang.multimedia.choose.crop.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -372,18 +373,6 @@ public class CropView extends FrameLayout implements Observer, View.OnClickListe
      *
      * @return
      */
-    public boolean isCrop(){
-        if (cropPicker.getVisibility() != VISIBLE)
-            return false;
-        Rect contentRect = backgroundLayer.getContentRect();
-        Rect cropRect = editView.getEditRect();
-        return cropRect.width() < contentRect.width() || cropRect.height() < contentRect.height();
-    }
-
-    /**
-     *
-     * @return
-     */
     public Rect getCropRect(){
         return editView.getEditRect();
     }
@@ -394,7 +383,7 @@ public class CropView extends FrameLayout implements Observer, View.OnClickListe
      */
     public void crop(){
         if (imageEditorProxy == null)
-            return;
+            return ;
         try {
             IEditAction cropAction = EditActionFactory.createAction("CropImage");
             cropAction.setParams(new Object(){

@@ -74,12 +74,8 @@ public class MultimediaCropActivity extends MultimediaBaseActivity implements Vi
             if (mPath == null)
                 return;
 
-            if (cropView.isCrop()){
-                cropView.crop();
-            }else {
-                ToastUtil.showShort(this,"未作任何更改！");
-                return;
-            }
+            cropView.crop();
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
