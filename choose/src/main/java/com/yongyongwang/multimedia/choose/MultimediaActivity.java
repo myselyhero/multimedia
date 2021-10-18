@@ -207,12 +207,21 @@ public class MultimediaActivity extends MultimediaBaseActivity implements Multim
                     MultimediaEntity cropEntity = (MultimediaEntity) data.getSerializableExtra(RESULT_DATA);
                     if (cropEntity == null)
                         return;
-                    for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
+                    /*for (MultimediaFolderEntity folderEntity : mFolderDataSource) {
                         if (folderEntity.isChecked() || folderEntity.getBucketId() == -1){
                             folderEntity.add(0,cropEntity);
                         }
+                    }*/
+                    for (MultimediaFolderEntity entity : mFolderDataSource) {
+                        if (entity.getData() != null && entity.getData().size() != 0){
+                            for (MultimediaEntity multimediaEntity:entity.getData()) {
+                                if (TextUtils.equals(multimediaEntity.getPath(),cropEntity.getPath())){
+                                    multimediaEntity.setCropPath(cropEntity.getCropPath());
+                                }
+                            }
+                        }
                     }
-                    chooseItem(cropEntity);
+                    //chooseItem(cropEntity);
                     mRecyclerView.update();
 
                     if (icCrop){
